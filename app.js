@@ -81,7 +81,8 @@ const dinoData = [
         "extinct": false
     }
 ];
-// Create Dino Constructor
+
+// Constructor function for dinosaurs:
 function dino(species, weight, height, diet, where, when, fact) {
 this.species = species;
 this.weight = weight;
@@ -96,19 +97,22 @@ this.opposableThumbs = 0;
 this.knowsHowToRead = false;
 }
 
-// Create Dino Objects
-//chose the creator function method because factory functions do not provide
-//inheritance features. IMPROVEMENT: This seems like could be done by a foreach loop
-const triceratops = new dino(dinoData[0].species, dinoData[0].weight, dinoData[0].height, dinoData[0].diet, dinoData[0].where, dinoData[0].when, dinoData[0].fact)
-const tyrannosaurusRex = new dino(dinoData[1].species, dinoData[1].weight, dinoData[1].height, dinoData[1].diet, dinoData[1].where, dinoData[1].when, dinoData[1].fact)
-const anklyosaurus = new dino(dinoData[2].species, dinoData[2].weight, dinoData[2].height, dinoData[2].diet, dinoData[2].where, dinoData[2].when, dinoData[2].fact)
-const brachiosaurus = new dino(dinoData[3].species, dinoData[3].weight, dinoData[3].height, dinoData[3].diet, dinoData[3].where, dinoData[3].when, dinoData[3].fact)
-const stegosaurus = new dino(dinoData[4].species, dinoData[4].weight, dinoData[4].height, dinoData[4].diet, dinoData[4].where, dinoData[4].when, dinoData[4].fact)
-const lasmosaurus = new dino(dinoData[5].species, dinoData[5].weight, dinoData[5].height, dinoData[5].diet, dinoData[5].where, dinoData[5].when, dinoData[5].fact)
-const teranodon = new dino(dinoData[6].species, dinoData[6].weight, dinoData[6].height, dinoData[6].diet, dinoData[6].where, dinoData[6].when, dinoData[6].fact)
-const pigeon = new dino(dinoData[7].species, dinoData[7].weight, dinoData[7].height, dinoData[7].diet, dinoData[7].where, dinoData[7].when, dinoData[7].fact)
+//Function that combines the constructor function for dinosaurs with the dinoData
+function createDino (n) {
+  return new dino(dinoData[n].species, dinoData[n].weight, dinoData[n].height, dinoData[n].diet, dinoData[n].where, dinoData[n].when, dinoData[n].fact)
+}
 
-// Create Human Object
+//each dino Object is created using the above function. This should be a forEach loop
+const triceratops = createDino(0, "triceratops")
+const tyrannosaurusRex = createDino(1, "triceratops")
+const anklyosaurus = createDino(2, "triceratops")
+const brachiosaurus = createDino(3, "triceratops")
+const stegosaurus = createDino(4, "triceratops")
+const lasmosaurus = createDino(5, "triceratops")
+const teranodon = createDino(6, "triceratops")
+const pigeon = createDino(7, "triceratops")
+
+// Create Human Object using literal notation (since there is only one)
 const human = {
   name: "",
   heightFeet: 2,
@@ -120,7 +124,7 @@ const human = {
   knowsHowToRead: true,
 };
 
-// Use IIFE to get human data (not an IIFE, don't know why IIFE)
+// Get human data from user input (not an IIFE, don't know why IIFE)
 thename.addEventListener('input', function () {
   human.name = event.target.value ;
 });
@@ -143,83 +147,86 @@ const removeelement = function (elementID) {
   element.remove()}
 
 //the following function creates the infographic when "submit" is clicked
+//most of the functionality of the site is located within this event listener
 //first, the event listener to trigger the whole thing when "submit" is clicked
 btn.addEventListener('click', function () {
   //immediately remove the form using the above function to remove elements
   removeelement("dino-compare")
-  //put the grid and the grid items into a variable
+  //put the grid and the grid items into a variable for later refference
   const card = document.getElementsByClassName("grid-item")
   const infographic = document.getElementById("grid");
 
-  //the following function creates the 9 grid elements (cards)
-  for (var x = 0; x < 9; x++) {
-    var newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
-    newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable
-    newDiv.setAttribute("id", x)
-    grid.appendChild(newDiv); //appends it to the parent container. This will repeat as many times as needed
-  }
-
-  //Arrays containing all images
+  //Empry array that will be filled with all images
   const dinoImages = [];
 
-  //Adding each dinosaur image to the array:
-  const triceratopsImg = document.createElement('img');
-  triceratopsImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/triceratops.png")
-  dinoImages.push(triceratopsImg)
+  //Using an IIFE to add each dinosaur image + human image to the array.
+  //the dinosaur images appear in random positions, human and pigeon are fixed
+  (addImages = function () {
+    const triceratopsImg = document.createElement('img');
+    triceratopsImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/triceratops.png")
+    dinoImages.push(triceratopsImg)
 
-  const elasmosaurusImg = document.createElement('img');
-  elasmosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/elasmosaurus.png")
-  dinoImages.push(elasmosaurusImg);
+    const elasmosaurusImg = document.createElement('img');
+    elasmosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/elasmosaurus.png")
+    dinoImages.push(elasmosaurusImg);
 
-  const anklyosaurusImg = document.createElement('img');
-  anklyosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/anklyosaurus.png")
-  dinoImages.push(anklyosaurusImg);
+    const anklyosaurusImg = document.createElement('img');
+    anklyosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/anklyosaurus.png")
+    dinoImages.push(anklyosaurusImg);
 
-  const brachiosaurusImg = document.createElement('img');
-  brachiosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/brachiosaurus.png")
-  dinoImages.push(brachiosaurusImg);
+    const brachiosaurusImg = document.createElement('img');
+    brachiosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/brachiosaurus.png")
+    dinoImages.push(brachiosaurusImg);
 
-  const pteranodonImg = document.createElement('img');
-  pteranodonImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/pteranodon.png")
-  dinoImages.push(pteranodonImg);
+    const pteranodonImg = document.createElement('img');
+    pteranodonImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/pteranodon.png")
+    dinoImages.push(pteranodonImg);
 
-  const stegosaurusImg = document.createElement('img');
-  stegosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/stegosaurus.png")
-  dinoImages.push(stegosaurusImg);
+    const stegosaurusImg = document.createElement('img');
+    stegosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/stegosaurus.png")
+    dinoImages.push(stegosaurusImg);
 
-  const tyrannosaurusRexImg = document.createElement('img');
-  tyrannosaurusRexImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/tyrannosaurus%20rex.png")
-  dinoImages.push(tyrannosaurusRexImg);
+    const tyrannosaurusRexImg = document.createElement('img');
+    tyrannosaurusRexImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/tyrannosaurus%20rex.png")
+    dinoImages.push(tyrannosaurusRexImg);
+    //creating a variable for human and pigeon
+    const humanImage = document.createElement('img');
+    humanImage.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/human.png")
 
-  //creating a variable for human and pigeon
-  const humanImage = document.createElement('img');
-  humanImage.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/human.png")
+    const pigeonImage = document.createElement('img');
+    pigeonImage.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/pigeon.png")
 
-  const pigeonImage = document.createElement('img');
-  pigeonImage.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/pigeon.png")
+    //the next function shuffles the array so that the order is different every time
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    };
+    //then we call the function to shuffle the array
+    shuffleArray(dinoImages);
+    //then add the human and pigeon to specific locations so that they always appear in the middle
+    dinoImages.splice(4, 0, humanImage);
+    dinoImages.splice(5, 0, pigeonImage);
+  })()
 
-  //the next function shuffles the array so that the order is different every time
-  function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-      }
-  };
-  //then we call the function to shuffle the array
-  shuffleArray(dinoImages);
-  //then add the human and pigeon to specific locations so that they always appear in the middle
-  dinoImages.splice(4, 0, humanImage);
-  dinoImages.splice(5, 0, pigeonImage);
 
-  //the next function appends an image to each card
-  dinoImages.forEach(function(item, index) {
-    card[index].appendChild(dinoImages[index]);
+  //the next function loops through the list of images to create cards with images
+  dinoImages.forEach(function(item, index) { //loop through the list of images
+    var newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
+    newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable
+    newDiv.setAttribute("id", index) //gives each new div element a different id
+    grid.appendChild(newDiv); //appends the new div to the parent container
+    card[index].appendChild(dinoImages[index]); //append an image to each new div
+
   });
 
+ // then the following function creates a comparison Method that returns a string
+ //the string is used to create a new objects
+ //the object gets appended to the cards
+ //cards case statement: case triceratops in image append random triceratops comparison method
+
   });
-
-
-
 
 
     // Create Dino Compare Method 1
