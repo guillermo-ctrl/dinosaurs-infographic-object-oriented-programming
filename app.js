@@ -117,7 +117,8 @@ const human = {
   name: "",
   heightFeet: 2,
   heightInches: 2,
-  weight: 2,
+  weightKG: 2,
+  weightLbs: 2,
   diet: "",
   codingSkills: `Knows how to code.`,
   opposableThumbs: 2,
@@ -210,54 +211,46 @@ btn.addEventListener('click', function () {
     dinoImages.splice(5, 0, pigeonImage);
   })()
 
-//The following function allows the creation of text elements containing name or species
-  const namePlateCreator = function(name){
-    const newName = document.createElement('p');
-    const newText = document.createTextNode('Species: ' + name);
+//The following function allows the creation of text elements containing name or species and fact
+  const infoModuleCreator = function(name, fact){
+    const lineBreak = document.createElement('br')
+    const newPara = document.createElement('p');
+    const newName = document.createTextNode('Species: ' + name);
+    const newFact = document.createTextNode('Fact: ' + fact);
     if (name == human.name) {
       const inputName = document.createTextNode('Name: ' + name);
-      newName.appendChild(inputName);
-      return newName
-    }
-    newName.appendChild(newText);
-    return newName
+      newPara.appendChild(inputName);
+      return newPara
     }
 
-//Create name element for all creatures in order for it to be appended later
-  const humanName = namePlateCreator(human.name)
-  const triceratopsName = namePlateCreator(triceratops.name)
-  const tyrannosaurusRexName = namePlateCreator(tyrannosaurusRex.name)
-  const anklyosaurusName = namePlateCreator(anklyosaurus.name)
-  const brachiosaurusName = namePlateCreator(brachiosaurus.name)
-  const stegosaurusName = namePlateCreator(stegosaurus.name)
-  const lasmosaurusName = namePlateCreator(lasmosaurus.name)
-  const teranodonName = namePlateCreator(teranodon.name)
-  const pigeonName = namePlateCreator(pigeon.name)
+    newPara.appendChild(newName);
+    newPara.appendChild(lineBreak);
+    newPara.appendChild(newFact);
 
-//Create name elements for dinosaurs in order for them to be appended later. This should be automatized
-  const triceratopsSpecies = namePlateCreator(triceratops.name)
-  const tyrannosaurusRexSpecies = namePlateCreator(tyrannosaurusRex.name)
-  const anklyosaurusSpecies = namePlateCreator(anklyosaurus.name)
-  const brachiosaurusSpecies = namePlateCreator(brachiosaurus.name)
-  const stegosaurusSpecies = namePlateCreator(stegosaurus.name)
-  const lasmosaurusSpecies = namePlateCreator(lasmosaurus.name)
-  const teranodonSpecies = namePlateCreator(teranodon.name)
-  const pigeonSpecies = namePlateCreator(pigeon.name)
+    return newPara
+    }
+
+  //The following function allows the creation of text elements containing a fact
+  // const factPlateCreator = function(fact){
+  //
+  //   const newFact = document.createElement('p');
+  //   const newText = document.createTextNode(fact);
+  //   newFact.appendChild(newText);
+  //
+  //   return newFact
+  //   }
 
 
-  //the next function loops through the list of images to create cards with images
+  //the next function loops through the list of images to create grid items (cards with images)
   dinoImages.forEach(function(item, index) { //loop through the list of images
     const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
     newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable
     newDiv.setAttribute("id", item.src) //gives each new div element a different id
     grid.appendChild(newDiv); //appends the new div to the parent container
     card[index].appendChild(dinoImages[index]); //append an image to each new div
-    if (index == 4) {
-    card[index].appendChild(humanName);
-    }
 
-    //the next function and switch make sure that the correct name plate is displayed
-    //under each dinosaur. Depending on the image ID, it appends a different name
+    //the next function and switch make sure that the correct data  is displayed
+    //in each card. Depending on the image ID, it appends a different name
     //this could actually be shortened significantly, by creating an array with
     //currentdino (the string inside the ID) and an array with name variables (whats inside appendchild)
     //then a foreach loop that is:
@@ -265,35 +258,42 @@ btn.addEventListener('click', function () {
     if (dinoname in currentdinoID)
       card[index].appendChild(dinonameplate);
     */
-    function currentDino(species) {
+    function currentCard(species) {
       return newDiv.id.includes(species)
     }
+
     switch (true) {
-      case currentDino("triceratops"):
-        card[index].appendChild(triceratopsName);
+
+      case currentCard("triceratops"):
+        card[index].appendChild(infoModuleCreator(triceratops.name, triceratops.fact));
         break;
-      case currentDino ("tyrannosaurus"):
-        card[index].appendChild(tyrannosaurusRexName);
+      case currentCard ("tyrannosaurus"):
+        card[index].appendChild(infoModuleCreator(tyrannosaurusRex.name, tyrannosaurusRex.fact));
         break;
-      case currentDino ("anklyosaurus"):
-        card[index].appendChild(anklyosaurusName);
+      case currentCard ("anklyosaurus"):
+        card[index].appendChild(infoModuleCreator(anklyosaurus.name, anklyosaurus.fact));
         break;
-      case currentDino ("brachiosaurus"):
-        card[index].appendChild(brachiosaurusName);
+      case currentCard ("brachiosaurus"):
+        card[index].appendChild(infoModuleCreator(brachiosaurus.name, brachiosaurus.fact));
         break;
-      case currentDino ("stegosaurus"):
-        card[index].appendChild(stegosaurusName);
+      case currentCard ("stegosaurus"):
+        card[index].appendChild(infoModuleCreator(stegosaurus.name, stegosaurus.fact));
         break;
-      case currentDino ("lasmosaurus"):
-        card[index].appendChild(lasmosaurusName);
+      case currentCard ("lasmosaurus"):
+        card[index].appendChild(infoModuleCreator(lasmosaurus.name, lasmosaurus.fact));
         break;
-      case currentDino ("teranodon"):
-        card[index].appendChild(teranodonName);
+      case currentCard ("teranodon"):
+        card[index].appendChild(infoModuleCreator(teranodon.name, teranodon.fact));
         break;
-      case currentDino ("pigeon"):
-        card[index].appendChild(pigeonName);
+      case currentCard ("pigeon"):
+        card[index].appendChild(infoModuleCreator(pigeon.name, pigeon.fact));
+        // infoModuleCreator = function(name, fact)
+        break;
+      case currentCard ("human"):
+        card[index].appendChild(infoModuleCreator(human.name, human.fact));
         break;
     }
+
 
 
   });
