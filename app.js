@@ -1,7 +1,7 @@
 //Data from JSON in an array
 const dinoData = [
     {
-        "species": "Triceratops",
+        "name": "Triceratops",
         "weight": 13000,
         "height": 114,
         "diet": "herbivor",
@@ -11,7 +11,7 @@ const dinoData = [
         "extinct": true
     },
     {
-        "species": "Tyrannosaurus Rex",
+        "name": "Tyrannosaurus Rex",
         "weight": 11905,
         "height": 144,
         "diet": "carnivor",
@@ -21,7 +21,7 @@ const dinoData = [
         "extinct": true
     },
     {
-        "species": "Anklyosaurus",
+        "name": "Anklyosaurus",
         "weight": 10500,
         "height": 55,
         "diet": "herbivor",
@@ -31,7 +31,7 @@ const dinoData = [
         "extinct": true
     },
     {
-        "species": "Brachiosaurus",
+        "name": "Brachiosaurus",
         "weight": 70000,
         "height": "372",
         "diet": "herbivor",
@@ -41,7 +41,7 @@ const dinoData = [
         "extinct": true
     },
     {
-        "species": "Stegosaurus",
+        "name": "Stegosaurus",
         "weight": 11600,
         "height": 79,
         "diet": "herbivor",
@@ -51,7 +51,7 @@ const dinoData = [
         "extinct": true
     },
     {
-        "species": "Elasmosaurus",
+        "name": "Elasmosaurus",
         "weight": 16000,
         "height": 59,
         "diet": "carnivor",
@@ -61,7 +61,7 @@ const dinoData = [
         "extinct": true
     },
     {
-        "species": "Pteranodon",
+        "name": "Pteranodon",
         "weight": 44,
         "height": 20,
         "diet": "carnivor",
@@ -71,7 +71,7 @@ const dinoData = [
         "extinct": true
     },
     {
-        "species": "Pigeon",
+        "name": "Pigeon",
         "weight": 0.5,
         "height": 9,
         "diet": "herbivor",
@@ -83,8 +83,8 @@ const dinoData = [
 ];
 
 // Constructor function for dinosaurs:
-function dino(species, weight, height, diet, where, when, fact) {
-this.species = species;
+function dino(name, weight, height, diet, where, when, fact) {
+this.name = name;
 this.weight = weight;
 this.height = height;
 this.diet = diet;
@@ -92,25 +92,25 @@ this.where = where;
 this.when = when;
 this.fact = fact;
 this.netWorth = 0;
-this.codingSkills = `The ${this.species} does not know how to code, hence it's net worth of ${this.netWorth} USD.`;
+this.codingSkills = `The ${this.name} does not know how to code, hence it's net worth of ${this.netWorth} USD.`;
 this.opposableThumbs = 0;
 this.knowsHowToRead = false;
 }
 
 //Function that combines the constructor function for dinosaurs with the dinoData
 function createDino (n) {
-  return new dino(dinoData[n].species, dinoData[n].weight, dinoData[n].height, dinoData[n].diet, dinoData[n].where, dinoData[n].when, dinoData[n].fact)
+  return new dino(dinoData[n].name, dinoData[n].weight, dinoData[n].height, dinoData[n].diet, dinoData[n].where, dinoData[n].when, dinoData[n].fact)
 }
 
 //each dino Object is created using the above function. This should be a forEach loop
-const triceratops = createDino(0, "triceratops")
-const tyrannosaurusRex = createDino(1, "triceratops")
-const anklyosaurus = createDino(2, "triceratops")
-const brachiosaurus = createDino(3, "triceratops")
-const stegosaurus = createDino(4, "triceratops")
-const lasmosaurus = createDino(5, "triceratops")
-const teranodon = createDino(6, "triceratops")
-const pigeon = createDino(7, "triceratops")
+const triceratops = createDino(0)
+const tyrannosaurusRex = createDino(1)
+const anklyosaurus = createDino(2) //deleted following format: (2, "anklyosaurus")
+const brachiosaurus = createDino(3)
+const stegosaurus = createDino(4)
+const lasmosaurus = createDino(5)
+const teranodon = createDino(6)
+const pigeon = createDino(7)
 
 // Create Human Object using literal notation (since there is only one)
 const human = {
@@ -163,38 +163,38 @@ btn.addEventListener('click', function () {
   //the dinosaur images appear in random positions, human and pigeon are fixed
   (addImages = function () {
     const triceratopsImg = document.createElement('img');
-    triceratopsImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/triceratops.png")
+    triceratopsImg.setAttribute("src", "images/triceratops.png")
     dinoImages.push(triceratopsImg)
 
     const elasmosaurusImg = document.createElement('img');
-    elasmosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/elasmosaurus.png")
+    elasmosaurusImg.setAttribute("src", "images/elasmosaurus.png")
     dinoImages.push(elasmosaurusImg);
 
     const anklyosaurusImg = document.createElement('img');
-    anklyosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/anklyosaurus.png")
+    anklyosaurusImg.setAttribute("src", "images/anklyosaurus.png")
     dinoImages.push(anklyosaurusImg);
 
     const brachiosaurusImg = document.createElement('img');
-    brachiosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/brachiosaurus.png")
+    brachiosaurusImg.setAttribute("src", "images/brachiosaurus.png")
     dinoImages.push(brachiosaurusImg);
 
     const pteranodonImg = document.createElement('img');
-    pteranodonImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/pteranodon.png")
+    pteranodonImg.setAttribute("src", "images/pteranodon.png")
     dinoImages.push(pteranodonImg);
 
     const stegosaurusImg = document.createElement('img');
-    stegosaurusImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/stegosaurus.png")
+    stegosaurusImg.setAttribute("src", "images/stegosaurus.png")
     dinoImages.push(stegosaurusImg);
 
     const tyrannosaurusRexImg = document.createElement('img');
-    tyrannosaurusRexImg.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/tyrannosaurus%20rex.png")
+    tyrannosaurusRexImg.setAttribute("src", "images/tyrannosaurus%20rex.png")
     dinoImages.push(tyrannosaurusRexImg);
     //creating a variable for human and pigeon
     const humanImage = document.createElement('img');
-    humanImage.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/human.png")
+    humanImage.setAttribute("src", "images/human.png")
 
     const pigeonImage = document.createElement('img');
-    pigeonImage.setAttribute("src", "file:///C:/Users/GUILLE/Desktop/Documentos%20de%20Guille/lernen/JavaScript/assignment/Javascript/images/pigeon.png")
+    pigeonImage.setAttribute("src", "images/pigeon.png")
 
     //the next function shuffles the array so that the order is different every time
     function shuffleArray(array) {
@@ -210,14 +210,91 @@ btn.addEventListener('click', function () {
     dinoImages.splice(5, 0, pigeonImage);
   })()
 
+//The following function allows the creation of text elements containing name or species
+  const namePlateCreator = function(name){
+    const newName = document.createElement('p');
+    const newText = document.createTextNode('Species: ' + name);
+    if (name == human.name) {
+      const inputName = document.createTextNode('Name: ' + name);
+      newName.appendChild(inputName);
+      return newName
+    }
+    newName.appendChild(newText);
+    return newName
+    }
+
+//Create name element for all creatures in order for it to be appended later
+  const humanName = namePlateCreator(human.name)
+  const triceratopsName = namePlateCreator(triceratops.name)
+  const tyrannosaurusRexName = namePlateCreator(tyrannosaurusRex.name)
+  const anklyosaurusName = namePlateCreator(anklyosaurus.name)
+  const brachiosaurusName = namePlateCreator(brachiosaurus.name)
+  const stegosaurusName = namePlateCreator(stegosaurus.name)
+  const lasmosaurusName = namePlateCreator(lasmosaurus.name)
+  const teranodonName = namePlateCreator(teranodon.name)
+  const pigeonName = namePlateCreator(pigeon.name)
+
+//Create name elements for dinosaurs in order for them to be appended later. This should be automatized
+  const triceratopsSpecies = namePlateCreator(triceratops.name)
+  const tyrannosaurusRexSpecies = namePlateCreator(tyrannosaurusRex.name)
+  const anklyosaurusSpecies = namePlateCreator(anklyosaurus.name)
+  const brachiosaurusSpecies = namePlateCreator(brachiosaurus.name)
+  const stegosaurusSpecies = namePlateCreator(stegosaurus.name)
+  const lasmosaurusSpecies = namePlateCreator(lasmosaurus.name)
+  const teranodonSpecies = namePlateCreator(teranodon.name)
+  const pigeonSpecies = namePlateCreator(pigeon.name)
+
 
   //the next function loops through the list of images to create cards with images
   dinoImages.forEach(function(item, index) { //loop through the list of images
-    var newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
+    const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
     newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable
-    newDiv.setAttribute("id", index) //gives each new div element a different id
+    newDiv.setAttribute("id", item.src) //gives each new div element a different id
     grid.appendChild(newDiv); //appends the new div to the parent container
     card[index].appendChild(dinoImages[index]); //append an image to each new div
+    if (index == 4) {
+    card[index].appendChild(humanName);
+    }
+
+    //the next function and switch make sure that the correct name plate is displayed
+    //under each dinosaur. Depending on the image ID, it appends a different name
+    //this could actually be shortened significantly, by creating an array with
+    //currentdino (the string inside the ID) and an array with name variables (whats inside appendchild)
+    //then a foreach loop that is:
+    /*
+    if (dinoname in currentdinoID)
+      card[index].appendChild(dinonameplate);
+    */
+    function currentDino(species) {
+      return newDiv.id.includes(species)
+    }
+    switch (true) {
+      case currentDino("triceratops"):
+        card[index].appendChild(triceratopsName);
+        break;
+      case currentDino ("tyrannosaurus"):
+        card[index].appendChild(tyrannosaurusRexName);
+        break;
+      case currentDino ("anklyosaurus"):
+        card[index].appendChild(anklyosaurusName);
+        break;
+      case currentDino ("brachiosaurus"):
+        card[index].appendChild(brachiosaurusName);
+        break;
+      case currentDino ("stegosaurus"):
+        card[index].appendChild(stegosaurusName);
+        break;
+      case currentDino ("lasmosaurus"):
+        card[index].appendChild(lasmosaurusName);
+        break;
+      case currentDino ("teranodon"):
+        card[index].appendChild(teranodonName);
+        break;
+      case currentDino ("pigeon"):
+        card[index].appendChild(pigeonName);
+        break;
+    }
+
 
   });
 
