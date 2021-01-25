@@ -27,7 +27,7 @@ const dinoData = [
         "diet": "herbivor",
         "where": "North America",
         "when": "Late Cretaceous",
-        "fact": "Anklyosaurus survived for approximately 135 million years.",
+        "fact": "Wife took his children and house then got extinct.",
         "extinct": true
     },
     {
@@ -37,7 +37,7 @@ const dinoData = [
         "diet": "herbivor",
         "where": "North America",
         "when": "Late Jurasic",
-        "fact": "An asteroid was named 9954 Brachiosaurus in 1991.",
+        "fact": "Eggs smaller than chicken eggs.",
         "extinct": true
     },
     {
@@ -47,7 +47,7 @@ const dinoData = [
         "diet": "herbivor",
         "where": "North America, Europe, Asia",
         "when": "Late Jurasic to Early Cretaceous",
-        "fact": "The Stegosaurus had between 17 and 22 seperate places and flat spines.",
+        "fact": "Brain the size of a walnut.",
         "extinct": true
     },
     {
@@ -57,7 +57,7 @@ const dinoData = [
         "diet": "carnivor",
         "where": "North America",
         "when": "Late Cretaceous",
-        "fact": "Elasmosaurus was a marine reptile first discovered in Kansas.",
+        "fact": "Incapable of raising neck above water.",
         "extinct": true
     },
     {
@@ -67,7 +67,7 @@ const dinoData = [
         "diet": "carnivor",
         "where": "North America",
         "when": "Late Cretaceous",
-        "fact": "Actually a flying reptile, the Pteranodon is not a dinosaur.",
+        "fact": "Not a dinosaur. Proves there is more than one way to extintion.",
         "extinct": true
     },
     {
@@ -77,7 +77,7 @@ const dinoData = [
         "diet": "herbivor",
         "where": "World Wide",
         "when": "Holocene",
-        "fact": "All birds are living dinosaurs.",
+        "fact": "All birds are secretly dinosaurs.",
         "extinct": false
     }
 ];
@@ -86,7 +86,11 @@ const dinoData = [
 function dino(name, weight, height, diet, where, when, fact) {
 this.name = name;
 this.weight = weight;
+this.weightlbs = weight;
+this.weightkg = weight/2.2046;
 this.height = height;
+this.heightinches = height;
+this.heightcm = height/0.39370;
 this.diet = diet;
 this.where = where;
 this.when = when;
@@ -115,10 +119,9 @@ const pigeon = createDino(7)
 // Create Human Object using literal notation (since there is only one)
 const human = {
   name: "",
-  heightFeet: 2,
-  heightInches: 2,
-  weightKG: 2,
-  weightLbs: 2,
+  inputFeet: 2,
+  inputInches: 2,
+  inputweight: 2,
   diet: "",
   codingSkills: `Knows how to code.`,
   opposableThumbs: 2,
@@ -133,29 +136,93 @@ diet.addEventListener('input', function () {
   human.diet = event.target.value ;
 });
 feet.addEventListener('input', function () {
-  human.heightFeet = event.target.value ;
+  human.inputFeet = event.target.value ;
 });
 inches.addEventListener('input', function () {
-  human.heightInches = event.target.value ;
+  human.inputInches = event.target.value ;
 });
 weight.addEventListener('input', function () {
-  human.weight = event.target.value ;
+  human.inputweight = event.target.value ;
 });
+
+
 
 //This function can be used to remove elements by ID
 const removeelement = function (elementID) {
   const element = document.getElementById(elementID);
   element.remove()}
 
+
 //the following function creates the infographic when "submit" is clicked
 //most of the functionality of the site is located within this event listener
 //first, the event listener to trigger the whole thing when "submit" is clicked
 btn.addEventListener('click', function () {
+  //First we want to check if the input of the form is valid.
+  ////the next function checks if a string is only characters
+  function onlyCharacters (str) {
+  var code, i, len;
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code > 96 && code < 123)) { // lower alpha (a-z)
+      return false;
+    }
+  }
+  return true;
+};
+  function onlyNumbers (str) {
+  var code, i, len;
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58)) { // lower alpha (a-z)
+      return false;
+    }
+  }
+  return true;
+  };
+  function validDiet (str) {
+    switch (str) {
+      case ("Omnivor"):
+        return true
+        break;
+      case ("Herbivor"):
+        return true
+        break;
+      case ("Carnivor"):
+        return true
+        break;
+      }
+      return false;
+  };
+
+  //here we have an if statement that will get out of the function and alert
+  //the user if any of the input data is not correct.
+
+  if (onlyCharacters(human.name) == false || human.name.length == 0 || validDiet(human.diet) == false
+    || onlyNumbers(human.inputFeet) == false || onlyNumbers(human.inputInches) == false
+    || onlyNumbers(human.inputweight) == false) {
+    alert("Input not valid.")
+    /*
+    Todos:
+    inputFeet
+    inputInches
+    inputweight
+    */
+    return;
+  }
+
   //immediately remove the form using the above function to remove elements
   removeelement("dino-compare")
   //put the grid and the grid items into a variable for later refference
   const card = document.getElementsByClassName("grid-item")
   const infographic = document.getElementById("grid");
+
+
+  //assign human values according to different metric system
+  human.weightlbs = human.inputweight;
+  human.weightkg = human.inputweight/2.2;
+  human.heightinches = human.inputFeet*12 + human.inputInches;
+
 
   //Empry array that will be filled with all images
   const dinoImages = [];
@@ -287,7 +354,6 @@ btn.addEventListener('click', function () {
         break;
       case currentCard ("pigeon"):
         card[index].appendChild(infoModuleCreator(pigeon.name, pigeon.fact));
-        // infoModuleCreator = function(name, fact)
         break;
       case currentCard ("human"):
         card[index].appendChild(infoModuleCreator(human.name, human.fact));
