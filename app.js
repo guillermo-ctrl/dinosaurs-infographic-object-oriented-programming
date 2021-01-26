@@ -222,13 +222,9 @@ btn.addEventListener('click', function () {
   human.heightcm =  human.heightinches*2.54
   human.weight = human.inputweight;
 
-  
 
-  //Add the compare values to each dino objects
-  dinoArray.forEach(function(item, index) {
-  addThumbCompare(item)
-  addWeightCompare(item)
-  });
+
+
 
   //put the grid and the grid items into a variable for later refference
   const card = document.getElementsByClassName("grid-item")
