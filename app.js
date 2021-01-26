@@ -53,7 +53,7 @@ const dinoData = [
     {
         "name": "Elasmosaurus",
         "weight": 16000,
-        "height": 59,
+        "height": 408,
         "diet": "carnivor",
         "where": "North America",
         "when": "Late Cretaceous",
@@ -98,7 +98,6 @@ this.fact = fact;
 this.netWorth = 0;
 this.codingSkills = `The ${this.name} does not know how to code, hence it's net worth of ${this.netWorth} USD.`;
 this.opposableThumbs = 0;
-this.knowsHowToRead = false;
 }
 
 //Function that combines the constructor function for dinosaurs with the dinoData
@@ -112,22 +111,23 @@ const tyrannosaurusRex = createDino(1)
 const anklyosaurus = createDino(2)
 const brachiosaurus = createDino(3)
 const stegosaurus = createDino(4)
-const lasmosaurus = createDino(5)
+const elasmosaurus = createDino(5)
 const pteranodon = createDino(6)
 const pigeon = createDino(7)
 
 //all dino objects are put in an array for later use
-const dinoArray = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, stegosaurus, lasmosaurus, pteranodon, pigeon];
+const dinoArray = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, stegosaurus, elasmosaurus, pteranodon, pigeon];
 
 // Create Human Object using literal notation (since there is only one)
 const human = {
-  name: "",
-  inputFeet: 2,
-  inputInches: 2,
-  inputweight: 2,
-  diet: "",
+  name: "John",
+  species: "human",
+  inputFeet: 5,
+  inputInches: 6,
+  inputweight: 150,
+  diet: "Herbivor",
   opposableThumbs: 2,
-  weight: 2
+  weight: 150
 };
 
 
@@ -156,14 +156,13 @@ const removeelement = function (elementID) {
   const element = document.getElementById(elementID);
   element.remove()}
 
-
 //the following function creates the infographic when "submit" is clicked
 //most of the functionality of the site is located within this event listener
 //first, the event listener to trigger the whole thing when "submit" is clicked
 
 btn.addEventListener('click', function () {
 
-  //First we want to check if the input of the form is valid.
+  //First we want to check if the name input is valid.
   //the next functions check for characters and valid diets
   function onlyCharacters (str) {
   var code, i, len;
@@ -176,43 +175,15 @@ btn.addEventListener('click', function () {
   }
   return true;
 };
-  function onlyNumbers (str) {
-  var code, i, len;
-  for (i = 0, len = str.length; i < len; i++) {
-    code = str.charCodeAt(i);
-    if (!(code > 47 && code < 58)) { // lower alpha (a-z)
-      return false;
-    }
-  }
-  return true;
-}; //This is probably not needed
-  function validDiet (str) { //could be simplified to: if "select an option" then not valid
-    switch (str) {
-      case ("Omnivor"):
-        return true
-        break;
-      case ("Herbivor"):
-        return true
-        break;
-      case ("Carnivor"):
-        return true
-        break;
-      }
-      return false;
-  };
 
   //here we have an if statement that will get out of the function and alert
-  //the user if any of the input data is not correct.
-  //the following onlynumbers function calls are probably not needed (cant enter characters anyway)
-
-  if (onlyCharacters(human.name) == false || human.name.length == 0 || validDiet(human.diet) == false
-    || onlyNumbers(human.inputFeet) == false || onlyNumbers(human.inputInches) == false
-    || onlyNumbers(human.inputweight) == false) {
+  //the user if the name is not valid
+  if (onlyCharacters(human.name) == false || human.name.length == 0 ) {
     alert("Input not valid.")
     return;
   };
 
-  //immediately remove the form using the removeelement function
+  //once we have valid data, remove the form using the removeelement function
   removeelement("dino-compare")
 
   //assign human values according to different metric system, needs to happen on "submit" click
@@ -221,10 +192,55 @@ btn.addEventListener('click', function () {
   human.heightinches = (human.inputFeet*12) + (human.inputInches);
   human.heightcm =  human.heightinches*2.54
   human.weight = human.inputweight;
+  human.height = human.heightinches;
 
+  //Compare method 1
+  const addThumbCompare = function (object) {
+    object.opposableThumbs = "Has a grand total of " + object.opposableThumbs + " opposable thumbs, " +(human.opposableThumbs - object.opposableThumbs) + " less than you";
+  }
+  //Compare method 2
+  const addWeightCompare = function (object) {
+    if (object.weight > human.weight) {
+      object.weight = object.weight-human.weight + " lbs fatter than you.";
+    }
+    else {
+      object.weight = "You have " + (human.weight - object.weight) + " more lbs of raw muscle mass than the puny " + object.name + ".";
+    }
+    //delete other weight data so that it does not show up in the final infographic
+    delete object.weightlbs
+    delete object.weightkg
+  }
+  //Compare method 3
+  const addHeightCompare = function (object) {
+    if (object.height > human.height) {
+      const inchesDifference = function () {
+      n = object.height - human.height
+      string = ""
+      string = Math.floor(string + n/12) + " feet"
+      if (n % 12 == 0) {
+        return string
+        }
+      else {
+        string = string + " and " + n % 12 + " inches"
+        }
+      return string
+        }
+      object.height = inchesDifference(object) + " too tall to enjoy any Disneyland rides."
+      }
 
+    else {
+      object.height = "Tiny " + object.name + " is " + (human.height - object.height) + " inches tinier than you.";
+      }
+      delete object.heightcm
+      delete object.heightinches
+      }
 
-
+  //add the compared information to all dinos
+  dinoArray.forEach(function(item, index) {
+  addThumbCompare(item)
+  addWeightCompare(item)
+  addHeightCompare(item)
+  });
 
   //put the grid and the grid items into a variable for later refference
   const card = document.getElementsByClassName("grid-item")
@@ -291,20 +307,30 @@ btn.addEventListener('click', function () {
     return obj[keys[ keys.length * Math.random() << 0]];
   };
 
-  //The following function allows the creation of text elements containing name or species and fact
-  const infoModuleCreator = function(name, fact){
+  //The following function creates text elements containing species and fact
+  const infoModuleCreator = function(name){
     const lineBreak = document.createElement('br')
     const newPara = document.createElement('p');
-    const newName = document.createTextNode('Species: ' + name);
-    const newFact = document.createTextNode(fact);
-    if (name == human.name) {
-      const inputName = document.createTextNode('Name: ' + name);
+    const newName = document.createTextNode('Species: ' + name.name);
+    const newFact = document.createTextNode(randomProperty(name));
+    //make an exception so that the human only gets a name and no fact
+    if (name.species === "human") {
+      const inputName = document.createTextNode('Name: ' + name.name);
       newPara.appendChild(inputName);
+      return newPara
+    }
+    else if (name.name === "Pigeon") {
+      const inputName = document.createTextNode('Species: ' + name.name);
+      const pigeonFact = document.createTextNode(pigeon.fact);
+      newPara.appendChild(inputName);
+      newPara.appendChild(lineBreak);
+      newPara.appendChild(pigeonFact);
       return newPara
     }
 
     newPara.appendChild(newName);
     newPara.appendChild(lineBreak);
+
     newPara.appendChild(newFact);
 
     return newPara
@@ -313,52 +339,38 @@ btn.addEventListener('click', function () {
   //the next function loops through the list of images to create grid items (cards with images)
   dinoImages.forEach(function(item, index) { //loop through the list of images
     const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
-    newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable, thus making the div a "card"
-    newDiv.setAttribute("id", item.src) //gives each new div element a different id based on the image src
+    newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable, thus making the div a "card" or grid item
+    newDiv.setAttribute("id", item.src.slice(104, -4)) //gives each new div element a different id based on the image src
     grid.appendChild(newDiv); //appends the new div to the parent container (the grid)
     card[index].appendChild(dinoImages[index]); //append an image to each new div
 
-    //the next function and switch make sure that the correct data  is displayed
-    //in each card. Depending on the image ID, it appends a different name
-    //this could actually be shortened significantly, by creating an array with
-    //currentdino (the string inside the ID) and an array with name variables (whats inside appendchild)
-    //then a foreach loop that is:
-    /*
-    if (dinoname in currentdinoID)
-      card[index].appendChild(dinonameplate);
-    */
-    function currentCard(species) {
-      return newDiv.id.includes(species)
-    }
-
-    switch (true) {
-
-      case currentCard("triceratops"):
-        card[index].appendChild(infoModuleCreator(triceratops.name, randomProperty(triceratops)));
+    switch (newDiv.id) {
+      case ("triceratops"):
+        card[index].appendChild(infoModuleCreator(triceratops));
         break;
-      case currentCard ("tyrannosaurus"):
-        card[index].appendChild(infoModuleCreator(tyrannosaurusRex.name, randomProperty(tyrannosaurusRex)));
+      case ("tyrannosaurus%20rex"):
+        card[index].appendChild(infoModuleCreator(tyrannosaurusRex));
         break;
-      case currentCard ("anklyosaurus"):
-        card[index].appendChild(infoModuleCreator(anklyosaurus.name, randomProperty(anklyosaurus)));
+      case ("anklyosaurus"):
+        card[index].appendChild(infoModuleCreator(anklyosaurus));
         break;
-      case currentCard ("brachiosaurus"):
-        card[index].appendChild(infoModuleCreator(brachiosaurus.name, randomProperty(brachiosaurus)));
+      case ("brachiosaurus"):
+        card[index].appendChild(infoModuleCreator(brachiosaurus));
         break;
-      case currentCard ("stegosaurus"):
-        card[index].appendChild(infoModuleCreator(stegosaurus.name, randomProperty(stegosaurus)));
+      case ("stegosaurus"):
+        card[index].appendChild(infoModuleCreator(stegosaurus));
         break;
-      case currentCard ("lasmosaurus"):
-        card[index].appendChild(infoModuleCreator(lasmosaurus.name, randomProperty(lasmosaurus)));
+      case ("elasmosaurus"):
+        card[index].appendChild(infoModuleCreator(elasmosaurus));
         break;
-      case currentCard ("pteranodon"):
-        card[index].appendChild(infoModuleCreator(pteranodon.name, randomProperty(pteranodon)));
+      case ("pteranodon"):
+        card[index].appendChild(infoModuleCreator(pteranodon));
         break;
-      case currentCard ("pigeon"):
-        card[index].appendChild(infoModuleCreator(pigeon.name, pigeon.fact));
+      case ("pigeon"):
+        card[index].appendChild(infoModuleCreator(pigeon));
         break;
-      case currentCard ("human"):
-        card[index].appendChild(infoModuleCreator(human.name, human.fact));
+      case ("human"):
+        card[index].appendChild(infoModuleCreator(human));
         break;
     }
 
