@@ -109,12 +109,15 @@ function createDino (n) {
 //each dino Object is created using the above function. This should be a forEach loop
 const triceratops = createDino(0)
 const tyrannosaurusRex = createDino(1)
-const anklyosaurus = createDino(2) //deleted following format: (2, "anklyosaurus")
+const anklyosaurus = createDino(2)
 const brachiosaurus = createDino(3)
 const stegosaurus = createDino(4)
 const lasmosaurus = createDino(5)
-const teranodon = createDino(6)
+const pteranodon = createDino(6)
 const pigeon = createDino(7)
+
+//all dino objects are put in an array for later use
+const dinoArray = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, stegosaurus, lasmosaurus, pteranodon, pigeon];
 
 // Create Human Object using literal notation (since there is only one)
 const human = {
@@ -123,10 +126,10 @@ const human = {
   inputInches: 2,
   inputweight: 2,
   diet: "",
-  codingSkills: `Knows how to code.`,
   opposableThumbs: 2,
-  knowsHowToRead: true,
+  weight: 2
 };
+
 
 // Get human data from user input (not an IIFE, don't know why IIFE)
 thename.addEventListener('input', function () {
@@ -137,15 +140,16 @@ diet.addEventListener('input', function () {
 });
 feet.addEventListener('input', function () {
   human.inputFeet = event.target.value ;
+  human.inputFeet = parseInt(human.inputFeet, 10)
 });
 inches.addEventListener('input', function () {
   human.inputInches = event.target.value ;
+  human.inputInches = parseInt(human.inputInches, 10)
 });
 weight.addEventListener('input', function () {
   human.inputweight = event.target.value ;
+  human.inputweight = parseInt(human.inputweight, 10)
 });
-
-
 
 //This function can be used to remove elements by ID
 const removeelement = function (elementID) {
@@ -156,9 +160,11 @@ const removeelement = function (elementID) {
 //the following function creates the infographic when "submit" is clicked
 //most of the functionality of the site is located within this event listener
 //first, the event listener to trigger the whole thing when "submit" is clicked
+
 btn.addEventListener('click', function () {
+
   //First we want to check if the input of the form is valid.
-  ////the next function checks if a string is only characters
+  //the next functions check for characters and valid diets
   function onlyCharacters (str) {
   var code, i, len;
   for (i = 0, len = str.length; i < len; i++) {
@@ -179,8 +185,8 @@ btn.addEventListener('click', function () {
     }
   }
   return true;
-  };
-  function validDiet (str) {
+}; //This is probably not needed
+  function validDiet (str) { //could be simplified to: if "select an option" then not valid
     switch (str) {
       case ("Omnivor"):
         return true
@@ -197,31 +203,36 @@ btn.addEventListener('click', function () {
 
   //here we have an if statement that will get out of the function and alert
   //the user if any of the input data is not correct.
+  //the following onlynumbers function calls are probably not needed (cant enter characters anyway)
 
   if (onlyCharacters(human.name) == false || human.name.length == 0 || validDiet(human.diet) == false
     || onlyNumbers(human.inputFeet) == false || onlyNumbers(human.inputInches) == false
     || onlyNumbers(human.inputweight) == false) {
     alert("Input not valid.")
-    /*
-    Todos:
-    inputFeet
-    inputInches
-    inputweight
-    */
     return;
-  }
+  };
 
-  //immediately remove the form using the above function to remove elements
+  //immediately remove the form using the removeelement function
   removeelement("dino-compare")
+
+  //assign human values according to different metric system, needs to happen on "submit" click
+  human.weightlbs = human.inputweight;
+  human.weightkg = human.inputweight/2.2;
+  human.heightinches = (human.inputFeet*12) + (human.inputInches);
+  human.heightcm =  human.heightinches*2.54
+  human.weight = human.inputweight;
+
+  
+
+  //Add the compare values to each dino objects
+  dinoArray.forEach(function(item, index) {
+  addThumbCompare(item)
+  addWeightCompare(item)
+  });
+
   //put the grid and the grid items into a variable for later refference
   const card = document.getElementsByClassName("grid-item")
   const infographic = document.getElementById("grid");
-
-
-  //assign human values according to different metric system
-  human.weightlbs = human.inputweight;
-  human.weightkg = human.inputweight/2.2;
-  human.heightinches = human.inputFeet*12 + human.inputInches;
 
 
   //Empry array that will be filled with all images
@@ -278,12 +289,18 @@ btn.addEventListener('click', function () {
     dinoImages.splice(5, 0, pigeonImage);
   })()
 
-//The following function allows the creation of text elements containing name or species and fact
+  //The following function chooses a random property of an object (used for dino properties)
+  var randomProperty = function (obj) {
+    var keys = Object.keys(obj);
+    return obj[keys[ keys.length * Math.random() << 0]];
+  };
+
+  //The following function allows the creation of text elements containing name or species and fact
   const infoModuleCreator = function(name, fact){
     const lineBreak = document.createElement('br')
     const newPara = document.createElement('p');
     const newName = document.createTextNode('Species: ' + name);
-    const newFact = document.createTextNode('Fact: ' + fact);
+    const newFact = document.createTextNode(fact);
     if (name == human.name) {
       const inputName = document.createTextNode('Name: ' + name);
       newPara.appendChild(inputName);
@@ -297,23 +314,12 @@ btn.addEventListener('click', function () {
     return newPara
     }
 
-  //The following function allows the creation of text elements containing a fact
-  // const factPlateCreator = function(fact){
-  //
-  //   const newFact = document.createElement('p');
-  //   const newText = document.createTextNode(fact);
-  //   newFact.appendChild(newText);
-  //
-  //   return newFact
-  //   }
-
-
   //the next function loops through the list of images to create grid items (cards with images)
   dinoImages.forEach(function(item, index) { //loop through the list of images
     const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
-    newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable
-    newDiv.setAttribute("id", item.src) //gives each new div element a different id
-    grid.appendChild(newDiv); //appends the new div to the parent container
+    newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable, thus making the div a "card"
+    newDiv.setAttribute("id", item.src) //gives each new div element a different id based on the image src
+    grid.appendChild(newDiv); //appends the new div to the parent container (the grid)
     card[index].appendChild(dinoImages[index]); //append an image to each new div
 
     //the next function and switch make sure that the correct data  is displayed
@@ -332,25 +338,25 @@ btn.addEventListener('click', function () {
     switch (true) {
 
       case currentCard("triceratops"):
-        card[index].appendChild(infoModuleCreator(triceratops.name, triceratops.fact));
+        card[index].appendChild(infoModuleCreator(triceratops.name, randomProperty(triceratops)));
         break;
       case currentCard ("tyrannosaurus"):
-        card[index].appendChild(infoModuleCreator(tyrannosaurusRex.name, tyrannosaurusRex.fact));
+        card[index].appendChild(infoModuleCreator(tyrannosaurusRex.name, randomProperty(tyrannosaurusRex)));
         break;
       case currentCard ("anklyosaurus"):
-        card[index].appendChild(infoModuleCreator(anklyosaurus.name, anklyosaurus.fact));
+        card[index].appendChild(infoModuleCreator(anklyosaurus.name, randomProperty(anklyosaurus)));
         break;
       case currentCard ("brachiosaurus"):
-        card[index].appendChild(infoModuleCreator(brachiosaurus.name, brachiosaurus.fact));
+        card[index].appendChild(infoModuleCreator(brachiosaurus.name, randomProperty(brachiosaurus)));
         break;
       case currentCard ("stegosaurus"):
-        card[index].appendChild(infoModuleCreator(stegosaurus.name, stegosaurus.fact));
+        card[index].appendChild(infoModuleCreator(stegosaurus.name, randomProperty(stegosaurus)));
         break;
       case currentCard ("lasmosaurus"):
-        card[index].appendChild(infoModuleCreator(lasmosaurus.name, lasmosaurus.fact));
+        card[index].appendChild(infoModuleCreator(lasmosaurus.name, randomProperty(lasmosaurus)));
         break;
-      case currentCard ("teranodon"):
-        card[index].appendChild(infoModuleCreator(teranodon.name, teranodon.fact));
+      case currentCard ("pteranodon"):
+        card[index].appendChild(infoModuleCreator(pteranodon.name, randomProperty(pteranodon)));
         break;
       case currentCard ("pigeon"):
         card[index].appendChild(infoModuleCreator(pigeon.name, pigeon.fact));
