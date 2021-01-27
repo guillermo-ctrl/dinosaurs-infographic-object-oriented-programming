@@ -4,81 +4,73 @@ const dinoData = [
         "name": "Triceratops",
         "weight": 13000,
         "height": 114,
-        "diet": "herbivor",
+        "diet": "herbivore",
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Vision blocked by own horns.",
-        "extinct": true
     },
     {
         "name": "Tyrannosaurus Rex",
         "weight": 11905,
         "height": 144,
-        "diet": "carnivor",
+        "diet": "carnivore",
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Can not actually run.",
-        "extinct": true
     },
     {
         "name": "Anklyosaurus",
         "weight": 10500,
         "height": 55,
-        "diet": "herbivor",
+        "diet": "herbivore",
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Wife took his children and house then got extinct.",
-        "extinct": true
     },
     {
         "name": "Brachiosaurus",
         "weight": 70000,
         "height": "372",
-        "diet": "herbivor",
+        "diet": "herbivore",
         "where": "North America",
         "when": "Late Jurasic",
         "fact": "Eggs smaller than chicken eggs.",
-        "extinct": true
     },
     {
         "name": "Stegosaurus",
         "weight": 11600,
         "height": 79,
-        "diet": "herbivor",
+        "diet": "herbivore",
         "where": "North America, Europe, Asia",
         "when": "Late Jurasic to Early Cretaceous",
         "fact": "Brain the size of a walnut.",
-        "extinct": true
     },
     {
         "name": "Elasmosaurus",
         "weight": 16000,
         "height": 408,
-        "diet": "carnivor",
+        "diet": "carnivore",
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Incapable of raising neck above water.",
-        "extinct": true
     },
     {
         "name": "Pteranodon",
         "weight": 44,
         "height": 20,
-        "diet": "carnivor",
+        "diet": "carnivore",
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Not a dinosaur. Proves there is more than one way to extintion.",
-        "extinct": true
     },
     {
         "name": "Pigeon",
         "weight": 0.5,
         "height": 9,
-        "diet": "herbivor",
+        "diet": "herbivore",
         "where": "World Wide",
         "when": "Holocene",
         "fact": "All birds are secretly dinosaurs.",
-        "extinct": false
     }
 ];
 
@@ -125,7 +117,7 @@ const human = {
   inputFeet: 5,
   inputInches: 6,
   inputweight: 150,
-  diet: "Herbivor",
+  diet: "herbivore",
   opposableThumbs: 2,
   weight: 150
 };
@@ -234,12 +226,28 @@ btn.addEventListener('click', function () {
       delete object.heightcm
       delete object.heightinches
       }
+  //Compare method 4
+  const addDietCompare = function (object) {
+    if (object.diet == human.diet) {
+      object.diet = "Much like you, a " + object.diet;
+    }
+    else if (human.diet == "omnivore") {
+      object.diet = "Unlike you, an all-consuming" + human.diet + ", lacked the capacity to feed upon any and all living organisms";
+    }
+    else {
+      object.diet = "Made the wrong choice of becoming a " + object.diet
+    }
+    //delete other weight data so that it does not show up in the final infographic
+    delete object.weightlbs
+    delete object.weightkg
+  }
 
   //add the compared information to all dinos
   dinoArray.forEach(function(item, index) {
   addThumbCompare(item)
   addWeightCompare(item)
   addHeightCompare(item)
+  addDietCompare(item)
   });
 
   //put the grid and the grid items into a variable for later refference
