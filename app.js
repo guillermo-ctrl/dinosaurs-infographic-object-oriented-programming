@@ -126,8 +126,8 @@ const human = {
   inputkg: 68
 };
 
-//check the prefered metric system to display height cmoptions
-let metricSystem = "inches" //the default when loading the page
+//Set a default metric system
+let metricSystem = "inches"
 let weightSystem = "lbs"
 
 //event listeners for the prefered metric systems
@@ -159,7 +159,7 @@ mass.addEventListener('input', function () {
 });
 
 
-// Get human data from user input (not an IIFE, don't know why IIFE)
+// event listeners to get human data from user input
 thename.addEventListener('input', function () {
   human.name = event.target.value ;
 });
@@ -198,12 +198,9 @@ const removeelement = function (elementID) {
 
 //the following function creates the infographic when "submit" is clicked
 //most of the functionality of the site is located within this event listener
-//first, the event listener to trigger the whole thing when "submit" is clicked
-
 btn.addEventListener('click', function () {
 
   //First we want to check if the name input is valid.
-  //the next functions check for characters and valid diets
   function onlyCharacters (str) {
   var code, i, len;
   for (i = 0, len = str.length; i < len; i++) {
@@ -215,7 +212,6 @@ btn.addEventListener('click', function () {
   }
   return true;
 };
-
   //here we have an if statement that will get out of the function and alert
   //the user if the name is not valid
   if (onlyCharacters(human.name) == false || human.name.length == 0 ) {
@@ -226,7 +222,7 @@ btn.addEventListener('click', function () {
   //once we have valid data, remove the form using the removeelement function
   removeelement("dino-compare")
 
-  //assign human and dino values according to different metric system, needs to happen on "submit" click
+  //assign human and dino values according to the chosen metric systems
   if (weightSystem == "kg") {
     human.weight = human.inputkg
     human.weight = parseInt(human.weight, 10)
@@ -239,10 +235,8 @@ btn.addEventListener('click', function () {
     human.weight = human.inputlbs
   }
 
-  human.heightinches = (human.inputFeet*12) + (human.inputInches);
-  human.heightcm =  human.inputCentimeters + human.inputMeters*100
-
   if (metricSystem == "cm") {
+    human.heightcm =  human.inputCentimeters + human.inputMeters*100
     human.height = human.heightcm
     human.height = parseInt(human.height, 10)
     dinoArray.forEach(function(item, index) {
@@ -251,9 +245,12 @@ btn.addEventListener('click', function () {
     });
   }
   else if (metricSystem == "inches") {
+    human.heightinches = (human.inputFeet*12) + (human.inputInches);
     human.height = human.heightinches
   }
 
+  //now we add extra sauce to the infographic with the following compare methods
+  //the compare methods formulate comparisons between dino data and human input data
 
   //Compare method 1
   const addThumbCompare = function (object) {
@@ -332,15 +329,16 @@ btn.addEventListener('click', function () {
     delete object.weightkg
   }
 
-  //add the compared information to all dinos
+  //add the compared information to all dinos, so that this can in turn appear
+  //in the infographic
   dinoArray.forEach(function(item, index) {
-  addThumbCompare(item)
-  addWeightCompare(item)
-  addHeightCompare(item)
-  addDietCompare(item)
+    addThumbCompare(item)
+    addWeightCompare(item)
+    addHeightCompare(item)
+    addDietCompare(item)
   });
 
-  //put the grid and the grid items into a variable for later refference
+  //store the grid and the grid items into a variable for later refference
   const card = document.getElementsByClassName("grid-item")
   const infographic = document.getElementById("grid");
 
@@ -348,7 +346,7 @@ btn.addEventListener('click', function () {
   //Empry array that will be filled with all images
   const dinoImages = [];
 
-  //Using an IIFE to add each dinosaur image + human image to the array.
+  //Using an IIFE to add each dinosaur image + human image to the dinoImages array.
   //the dinosaur images appear in random positions, human and pigeon are fixed
   (addImages = function () {
     const triceratopsImg = document.createElement('img');
@@ -405,7 +403,7 @@ btn.addEventListener('click', function () {
     return obj[keys[ keys.length * Math.random() << 0]];
   };
 
-  //The following function creates text elements containing species and fact
+  //The following function creates text elements containing species and random fact
   const infoModuleCreator = function(name){
     const lineBreak = document.createElement('br')
     const newPara = document.createElement('p');
@@ -434,7 +432,7 @@ btn.addEventListener('click', function () {
     return newPara
     }
 
-  //the next function loops through the list of images to create grid items (cards with images)
+  //now we loop through created list of images to create grid items (cards with images)
   dinoImages.forEach(function(item, index) { //loop through the list of images
     const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
     newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable, thus making the div a "card" or grid item
@@ -442,7 +440,7 @@ btn.addEventListener('click', function () {
     grid.appendChild(newDiv); //appends the new div to the parent container (the grid)
     card[index].appendChild(dinoImages[index]); //append an image to each new div
 
-    switch (newDiv.id) {
+    switch (newDiv.id) { //check the current image id and append appropriate information based on it
       case ("triceratops"):
         card[index].appendChild(infoModuleCreator(triceratops));
         break;
@@ -473,34 +471,11 @@ btn.addEventListener('click', function () {
     }
 
 
-
   });
-
- // then the following function creates a comparison Method that returns a string
- //the string is used to create a new objects
- //the object gets appended to the cards
- //cards case statement: case triceratops in image append random triceratops comparison method
 
   });
 
 
-    // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-    // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-    // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-    // Generate Tiles for each Dino in Array
-
-        // Add tiles to DOM
-
-// On button click, prepare and display infographic
 
 //additional information
 // Object-Oriented Javascript
