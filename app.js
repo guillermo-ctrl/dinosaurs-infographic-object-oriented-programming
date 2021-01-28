@@ -116,11 +116,47 @@ const human = {
   species: "human",
   inputFeet: 5,
   inputInches: 6,
+  heightinches: 66,
+  inputCentimeters: 67,
+  inputMeters: 1,
   inputweight: 150,
   diet: "herbivore",
   opposableThumbs: 2,
-  weight: 150
+  inputlbs: 150,
+  inputkg: 68
 };
+
+//check the prefered metric system to display height cmoptions
+let metricSystem = "inches" //the default when loading the page
+let weightSystem = "lbs"
+
+//event listeners for the prefered metric systems
+metric.addEventListener('input', function () {
+  metricSystem = event.target.value ;
+  const cmoptions = document.getElementById("cmoptions")
+  const inchesoptions = document.getElementById("inchesoptions")
+  if (metricSystem == "inches") {
+    cmoptions.style.display = "none";
+    inchesoptions.style.display = "block";
+  }
+  else {
+    cmoptions.style.display = "block";
+    inchesoptions.style.display = "none";
+  }
+});
+mass.addEventListener('input', function () {
+  weightSystem = event.target.value ;
+  const lbsoptions = document.getElementById("weightlbs")
+  const kgoptions = document.getElementById("weightkg")
+  if (weightSystem == "lbs") {
+    kgoptions.style.display = "none";
+    lbsoptions.style.display = "block";
+  }
+  else {
+    kgoptions.style.display = "block";
+    lbsoptions.style.display = "none";
+  }
+});
 
 
 // Get human data from user input (not an IIFE, don't know why IIFE)
@@ -138,9 +174,21 @@ inches.addEventListener('input', function () {
   human.inputInches = event.target.value ;
   human.inputInches = parseInt(human.inputInches, 10)
 });
-weight.addEventListener('input', function () {
-  human.inputweight = event.target.value ;
-  human.inputweight = parseInt(human.inputweight, 10)
+meters.addEventListener('input', function () {
+  human.inputMeters = event.target.value ;
+  human.inputMeters = parseInt(human.inputMeters, 10)
+});
+centimeters.addEventListener('input', function () {
+  human.inputCentimeters = event.target.value ;
+  human.inputCentimeters = parseInt(human.inputCentimeters, 10)
+});
+weightlbs.addEventListener('input', function () {
+  human.inputlbs = event.target.value ;
+  human.inputlbs = parseInt(human.inputlbs, 10)
+});
+weightkg.addEventListener('input', function () {
+  human.inputkg = event.target.value ;
+  human.inputkg = parseInt(human.inputkg, 10)
 });
 
 //This function can be used to remove elements by ID
@@ -178,13 +226,34 @@ btn.addEventListener('click', function () {
   //once we have valid data, remove the form using the removeelement function
   removeelement("dino-compare")
 
-  //assign human values according to different metric system, needs to happen on "submit" click
-  human.weightlbs = human.inputweight;
-  human.weightkg = human.inputweight/2.2;
+  //assign human and dino values according to different metric system, needs to happen on "submit" click
+  if (weightSystem == "kg") {
+    human.weight = human.inputkg
+    human.weight = parseInt(human.weight, 10)
+    dinoArray.forEach(function(item, index) {
+      item.weight = item.weight*0.45
+      item.weight = parseInt(item.weight, 10)
+    });
+  }
+  else if (weightSystem == "lbs") {
+    human.weight = human.inputlbs
+  }
+
   human.heightinches = (human.inputFeet*12) + (human.inputInches);
-  human.heightcm =  human.heightinches*2.54
-  human.weight = human.inputweight;
-  human.height = human.heightinches;
+  human.heightcm =  human.inputCentimeters + human.inputMeters*100
+
+  if (metricSystem == "cm") {
+    human.height = human.heightcm
+    human.height = parseInt(human.height, 10)
+    dinoArray.forEach(function(item, index) {
+      item.height = item.height*2.54
+      item.height = parseInt(item.height, 10)
+    });
+  }
+  else if (metricSystem == "inches") {
+    human.height = human.heightinches
+  }
+
 
   //Compare method 1
   const addThumbCompare = function (object) {
@@ -193,10 +262,10 @@ btn.addEventListener('click', function () {
   //Compare method 2
   const addWeightCompare = function (object) {
     if (object.weight > human.weight) {
-      object.weight = object.weight-human.weight + " lbs fatter than you.";
+      object.weight = object.weight-human.weight + " " + weightSystem + " fatter than you.";
     }
     else {
-      object.weight = "You have " + (human.weight - object.weight) + " more lbs of raw muscle mass than the puny " + object.name + ".";
+      object.weight = "You have " + (human.weight - object.weight) + " more " + weightSystem + " of raw muscle mass than the puny " + object.name + ".";
     }
     //delete other weight data so that it does not show up in the final infographic
     delete object.weightlbs
@@ -205,26 +274,47 @@ btn.addEventListener('click', function () {
   //Compare method 3
   const addHeightCompare = function (object) {
     if (object.height > human.height) {
-      const inchesDifference = function () {
-      n = object.height - human.height
-      string = ""
-      string = Math.floor(string + n/12) + " feet"
-      if (n % 12 == 0) {
+      if (metricSystem == "inches") {
+        const inchesDifference = function () {
+        n = object.height - human.height
+        string = ""
+        string = Math.floor(string + n/12) + " feet"
+        if (n % 12 == 0) {
+          return string
+          }
+        else {
+          string = string + " and " + n % 12 + " inches"
+          }
         return string
+          }
+        object.height = inchesDifference(object) + " too tall to enjoy any Disneyland rides."
+        }
+      else if (metricSystem == "cm") {
+        const cmDifference = function () {
+        n = object.height - human.height
+        string = ""
+        string = Math.floor(string + n/100) + " meter"
+        if (n % 100 == 0) {
+          return string
+          }
+        else {
+          string = string + " and " + n % 100 + " centimeters"
+          }
+        return string
+          }
+        object.height = cmDifference(object) + " too tall to enjoy any Disneyland rides."
+      }
+    }
+    else if (object.height < human.height) {
+      if (metricSystem == "inches") {
+        object.height = "Tiny " + object.name + " is " + (human.height - object.height) + " inches tinier than you."
         }
       else {
-        string = string + " and " + n % 12 + " inches"
-        }
-      return string
-        }
-      object.height = inchesDifference(object) + " too tall to enjoy any Disneyland rides."
+        object.height = "Tiny " + object.name + " is " + Math.floor((human.height - object.heightcm)) + " cm tinier than you."};
       }
+    delete object.heightcm
+    delete object.heightinches
 
-    else {
-      object.height = "Tiny " + object.name + " is " + (human.height - object.height) + " inches tinier than you.";
-      }
-      delete object.heightcm
-      delete object.heightinches
       }
   //Compare method 4
   const addDietCompare = function (object) {
