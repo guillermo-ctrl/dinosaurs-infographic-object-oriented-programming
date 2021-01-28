@@ -1,4 +1,5 @@
 //Data from JSON in an array
+
 const dinoData = [
     {
         "name": "Triceratops",
@@ -8,6 +9,7 @@ const dinoData = [
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Vision blocked by own horns.",
+        "extinct": true
     },
     {
         "name": "Tyrannosaurus Rex",
@@ -17,6 +19,7 @@ const dinoData = [
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Can not actually run.",
+        "extinct": true
     },
     {
         "name": "Anklyosaurus",
@@ -26,6 +29,7 @@ const dinoData = [
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Wife took his children and house then got extinct.",
+        "extinct": true
     },
     {
         "name": "Brachiosaurus",
@@ -35,6 +39,7 @@ const dinoData = [
         "where": "North America",
         "when": "Late Jurasic",
         "fact": "Eggs smaller than chicken eggs.",
+        "extinct": true
     },
     {
         "name": "Stegosaurus",
@@ -44,6 +49,7 @@ const dinoData = [
         "where": "North America, Europe, Asia",
         "when": "Late Jurasic to Early Cretaceous",
         "fact": "Brain the size of a walnut.",
+        "extinct": true
     },
     {
         "name": "Elasmosaurus",
@@ -53,6 +59,7 @@ const dinoData = [
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Incapable of raising neck above water.",
+        "extinct": true
     },
     {
         "name": "Pteranodon",
@@ -62,6 +69,7 @@ const dinoData = [
         "where": "North America",
         "when": "Late Cretaceous",
         "fact": "Not a dinosaur. Proves there is more than one way to extintion.",
+        "extinct": true
     },
     {
         "name": "Pigeon",
@@ -71,11 +79,13 @@ const dinoData = [
         "where": "World Wide",
         "when": "Holocene",
         "fact": "All birds are secretly dinosaurs.",
+        "extinct": false,
     }
 ];
 
 // Constructor function for dinosaurs:
-function dino(name, weight, height, diet, where, when, fact) {
+
+function dino(name, weight, height, diet, where, when, fact, extinct) {
 this.name = name;
 this.weight = weight;
 this.weightlbs = weight;
@@ -87,17 +97,20 @@ this.diet = diet;
 this.where = where;
 this.when = when;
 this.fact = fact;
+this.extinct = extinct;
 this.netWorth = 0;
 this.codingSkills = `The ${this.name} does not know how to code, hence it's net worth of ${this.netWorth} USD.`;
 this.opposableThumbs = 0;
 }
 
 //Function that combines the constructor function for dinosaurs with the dinoData
+
 function createDino (n) {
-  return new dino(dinoData[n].name, dinoData[n].weight, dinoData[n].height, dinoData[n].diet, dinoData[n].where, dinoData[n].when, dinoData[n].fact)
+  return new dino(dinoData[n].name, dinoData[n].weight, dinoData[n].height, dinoData[n].diet, dinoData[n].where, dinoData[n].when, dinoData[n].fact, dinoData[n].extinct)
 }
 
-//each dino Object is created using the above function. This should be a forEach loop
+//each dino Object is created using the above function
+
 const triceratops = createDino(0)
 const tyrannosaurusRex = createDino(1)
 const anklyosaurus = createDino(2)
@@ -108,9 +121,11 @@ const pteranodon = createDino(6)
 const pigeon = createDino(7)
 
 //all dino objects are put in an array for later use
+
 const dinoArray = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, stegosaurus, elasmosaurus, pteranodon, pigeon];
 
 // Create Human Object using literal notation (since there is only one)
+
 const human = {
   name: "John",
   species: "human",
@@ -127,10 +142,12 @@ const human = {
 };
 
 //Set a default metric system
+
 let metricSystem = "inches"
 let weightSystem = "lbs"
 
 //event listeners for the prefered metric systems
+
 metric.addEventListener('input', function () {
   metricSystem = event.target.value ;
   const cmoptions = document.getElementById("cmoptions")
@@ -158,8 +175,8 @@ mass.addEventListener('input', function () {
   }
 });
 
-
 // event listeners to get human data from user input
+
 thename.addEventListener('input', function () {
   human.name = event.target.value ;
 });
@@ -192,15 +209,32 @@ weightkg.addEventListener('input', function () {
 });
 
 //This function can be used to remove elements by ID
+
 const removeelement = function (elementID) {
   const element = document.getElementById(elementID);
   element.remove()}
+
+//this function can be used to shuffle an array (credit: stackoverflow)
+
+const shuffleArray = function(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+};
+
+//event listener for the restart button
+reload.addEventListener('click', function () {
+  location.reload();
+});
+
 
 //the following function creates the infographic when "submit" is clicked
 //most of the functionality of the site is located within this event listener
 btn.addEventListener('click', function () {
 
   //First we want to check if the name input is valid.
+
   function onlyCharacters (str) {
   var code, i, len;
   for (i = 0, len = str.length; i < len; i++) {
@@ -214,6 +248,7 @@ btn.addEventListener('click', function () {
 };
   //here we have an if statement that will get out of the function and alert
   //the user if the name is not valid
+
   if (onlyCharacters(human.name) == false || human.name.length == 0 ) {
     alert("Input not valid.")
     return;
@@ -234,7 +269,6 @@ btn.addEventListener('click', function () {
   else if (weightSystem == "lbs") {
     human.weight = human.inputlbs
   }
-
   if (metricSystem == "cm") {
     human.heightcm =  human.inputCentimeters + human.inputMeters*100
     human.height = human.heightcm
@@ -250,13 +284,15 @@ btn.addEventListener('click', function () {
   }
 
   //now we add extra sauce to the infographic with the following compare methods
-  //the compare methods formulate comparisons between dino data and human input data
-
+  //the compare methods formulates comparisons between dino data and human input data
   //Compare method 1
+
   const addThumbCompare = function (object) {
     object.opposableThumbs = "Has a grand total of " + object.opposableThumbs + " opposable thumbs, " +(human.opposableThumbs - object.opposableThumbs) + " less than you";
   }
+
   //Compare method 2
+
   const addWeightCompare = function (object) {
     if (object.weight > human.weight) {
       object.weight = object.weight-human.weight + " " + weightSystem + " fatter than you.";
@@ -268,7 +304,9 @@ btn.addEventListener('click', function () {
     delete object.weightlbs
     delete object.weightkg
   }
+
   //Compare method 3
+
   const addHeightCompare = function (object) {
     if (object.height > human.height) {
       if (metricSystem == "inches") {
@@ -313,7 +351,9 @@ btn.addEventListener('click', function () {
     delete object.heightinches
 
       }
+
   //Compare method 4
+
   const addDietCompare = function (object) {
     if (object.diet == human.diet) {
       object.diet = "Much like you, a " + object.diet;
@@ -327,10 +367,12 @@ btn.addEventListener('click', function () {
     //delete other weight data so that it does not show up in the final infographic
     delete object.weightlbs
     delete object.weightkg
+    delete object.netWorth //also delete this, even if unrelated
   }
 
   //add the compared information to all dinos, so that this can in turn appear
   //in the infographic
+
   dinoArray.forEach(function(item, index) {
     addThumbCompare(item)
     addWeightCompare(item)
@@ -339,15 +381,18 @@ btn.addEventListener('click', function () {
   });
 
   //store the grid and the grid items into a variable for later refference
+
   const card = document.getElementsByClassName("grid-item")
+
   const infographic = document.getElementById("grid");
 
+  //Empty array that will be filled with all images
 
-  //Empry array that will be filled with all images
   const dinoImages = [];
 
   //Using an IIFE to add each dinosaur image + human image to the dinoImages array.
   //the dinosaur images appear in random positions, human and pigeon are fixed
+
   (addImages = function () {
     const triceratopsImg = document.createElement('img');
     triceratopsImg.setAttribute("src", "images/triceratops.png")
@@ -383,13 +428,6 @@ btn.addEventListener('click', function () {
     const pigeonImage = document.createElement('img');
     pigeonImage.setAttribute("src", "images/pigeon.png")
 
-    //the next function shuffles the array so that the order is different every time
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    };
     //then we call the function to shuffle the array
     shuffleArray(dinoImages);
     //then add the human and pigeon to specific locations so that they always appear in the middle
@@ -397,25 +435,22 @@ btn.addEventListener('click', function () {
     dinoImages.splice(5, 0, pigeonImage);
   })()
 
-  //The following function chooses a random property of an object (used for dino properties)
-  var randomProperty = function (obj) {
-    var keys = Object.keys(obj);
-    return obj[keys[ keys.length * Math.random() << 0]];
-  };
 
   //The following function creates text elements containing species and random fact
+
   const infoModuleCreator = function(name){
     const lineBreak = document.createElement('br')
     const newPara = document.createElement('p');
     const newName = document.createTextNode('Species: ' + name.name);
-    const newFact = document.createTextNode(randomProperty(name));
+
     //make an exception so that the human only gets a name and no fact
     if (name.species === "human") {
       const inputName = document.createTextNode('Name: ' + name.name);
       newPara.appendChild(inputName);
       return newPara
     }
-    else if (name.name === "Pigeon") {
+    //make an exception so that the pigeon only gets name and specific fact
+    else if (name.extinct == false) {
       const inputName = document.createTextNode('Species: ' + name.name);
       const pigeonFact = document.createTextNode(pigeon.fact);
       newPara.appendChild(inputName);
@@ -423,16 +458,29 @@ btn.addEventListener('click', function () {
       newPara.appendChild(pigeonFact);
       return newPara
     }
+    //The following function chooses a random property of an object (used for dino properties)
+    let randomProperty = function (obj) {
+      if (obj.extinct == true) { //leave the pigeon name in, will be needed later
+        delete obj.name //delete all dino names so that they do not appear as a fact
+        delete obj.extinct
+      }
+      const values = Object.values(obj);
+      shuffleArray(values)
+
+      return values[values.length-1]
+    };
+
+    const newFact = document.createTextNode(randomProperty(name));
 
     newPara.appendChild(newName);
     newPara.appendChild(lineBreak);
-
     newPara.appendChild(newFact);
 
     return newPara
     }
 
   //now we loop through created list of images to create grid items (cards with images)
+
   dinoImages.forEach(function(item, index) { //loop through the list of images
     const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
     newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable, thus making the div a "card" or grid item
@@ -473,23 +521,8 @@ btn.addEventListener('click', function () {
 
   });
 
+  //and finally show the button to restart the page
+  
+  reload.style.display = "inline-block"
+
   });
-
-
-
-//additional information
-// Object-Oriented Javascript
-// Great! You now have the starter code. Before moving forward, make sure you are
-// comfortable with the content from Object-Oriented Javascript. Ask yourself:
-//
-// What is an object and how do you access and modify its properties?
-// What is an IIFE?
-// How can you efficiently create objects?
-// What is the meaning of this?
-// What is prototypal inheritance?
-// What is the Document?
-// What are events?
-// How do you use getElementbyId() to select a DOM element by its id?
-// How do you use the className property? What does it return, and why would it be useful?
-// Every element has an innerHTML property that represents the markup of the element's
-// content. How can you leverage this property to get and set content?

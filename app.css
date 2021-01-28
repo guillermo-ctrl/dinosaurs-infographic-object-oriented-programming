@@ -35,6 +35,8 @@ p {
     font-weight: 100;
 }
 
+
+
 /* Grid Styles */
 #grid {
     background: #fff url(images/tracks.png) no-repeat;
@@ -154,6 +156,13 @@ select {
 }
 
 #btn {
+    display: inline-block;
+    background: #ccc;
+    padding: 0.8em;
+    margin: 1.2em auto;
+    transition: ease 0.3s all;
+}
+#reload {
     display: inline-block;
     background: #ccc;
     padding: 0.8em;
