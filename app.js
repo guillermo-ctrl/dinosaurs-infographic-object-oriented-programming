@@ -484,45 +484,45 @@ btn.addEventListener('click', function () {
   dinoImages.forEach(function(item, index) { //loop through the list of images
     const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
     newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable, thus making the div a "card" or grid item
-    newDiv.setAttribute("id", item.src.slice(104, -4)) //gives each new div element a different id based on the image src
+    newDiv.setAttribute("id", item.src) //gives each new div element a different id based on the image src
     grid.appendChild(newDiv); //appends the new div to the parent container (the grid)
     card[index].appendChild(dinoImages[index]); //append an image to each new div
-
-    switch (newDiv.id) { //check the current image id and append appropriate information based on it
-      case ("triceratops"):
-        card[index].appendChild(infoModuleCreator(triceratops));
-        break;
-      case ("tyrannosaurus%20rex"):
-        card[index].appendChild(infoModuleCreator(tyrannosaurusRex));
-        break;
-      case ("anklyosaurus"):
-        card[index].appendChild(infoModuleCreator(anklyosaurus));
-        break;
-      case ("brachiosaurus"):
-        card[index].appendChild(infoModuleCreator(brachiosaurus));
-        break;
-      case ("stegosaurus"):
-        card[index].appendChild(infoModuleCreator(stegosaurus));
-        break;
-      case ("elasmosaurus"):
-        card[index].appendChild(infoModuleCreator(elasmosaurus));
-        break;
-      case ("pteranodon"):
-        card[index].appendChild(infoModuleCreator(pteranodon));
-        break;
-      case ("pigeon"):
-        card[index].appendChild(infoModuleCreator(pigeon));
-        break;
-      case ("human"):
-        card[index].appendChild(infoModuleCreator(human));
-        break;
+    if (newDiv.id.slice(-15) == "triceratops.png") {
+      card[index].appendChild(infoModuleCreator(triceratops));
     }
+    else if (newDiv.id.slice(-23) == "tyrannosaurus%20rex.png") {
+      card[index].appendChild(infoModuleCreator(tyrannosaurusRex));
+    }
+    else if (newDiv.id.slice(-16) == "anklyosaurus.png") {
+      card[index].appendChild(infoModuleCreator(anklyosaurus));
+    }
+    else if (newDiv.id.slice(-17) == "brachiosaurus.png") {
+      card[index].appendChild(infoModuleCreator(brachiosaurus));
+    }
+    else if (newDiv.id.slice(-15) == "stegosaurus.png") {
+      card[index].appendChild(infoModuleCreator(stegosaurus));
+    }
+    else if (newDiv.id.slice(-16) == "elasmosaurus.png") {
+      card[index].appendChild(infoModuleCreator(elasmosaurus));
+    }
+    else if (newDiv.id.slice(-14) == "pteranodon.png") {
+      card[index].appendChild(infoModuleCreator(pteranodon));
+    }
+    else if (newDiv.id.slice(-10) == "pigeon.png") {
+      card[index].appendChild(infoModuleCreator(pigeon));
+    }
+    else if (newDiv.id.slice(-9) == "human.png") {
+      card[index].appendChild(infoModuleCreator(human));
+    }
+
+
+
 
 
   });
 
   //and finally show the button to restart the page
-  
+
   reload.style.display = "inline-block"
 
   });
