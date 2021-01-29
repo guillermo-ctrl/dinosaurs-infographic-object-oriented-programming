@@ -127,18 +127,9 @@ const dinoArray = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, s
 // Create Human Object using literal notation (since there is only one)
 
 const human = {
-  name: "John",
   species: "human",
-  inputFeet: 5,
-  inputInches: 6,
-  heightinches: 66,
-  inputCentimeters: 67,
-  inputMeters: 1,
-  inputweight: 150,
   diet: "herbivore",
   opposableThumbs: 2,
-  inputlbs: 150,
-  inputkg: 68
 };
 
 //Set a default metric system
@@ -246,17 +237,6 @@ btn.addEventListener("click", function () {
   }
   return true;
 };
-  //here we have an if statement that will get out of the function and alert
-  //the user if the name is not valid
-
-  if (onlyCharacters(human.name) == false || human.name.length == 0 ) {
-    alert("Input not valid.")
-    return;
-  };
-
-  //once we have valid data, remove the form using the removeElement function
-  removeElement("dino-compare")
-
   //assign human and dino values according to the chosen metric systems
   if (weightSystem == "kg") {
     human.weight = human.inputkg
@@ -282,6 +262,17 @@ btn.addEventListener("click", function () {
     human.heightinches = (human.inputFeet*12) + (human.inputInches);
     human.height = human.heightinches
   }
+  //here we have an if statement that will get out of the function and alert
+  //the user if the input is not valid
+
+  if (onlyCharacters(human.name) == false ||human.name == undefined || human.name.length == 0 || human.height == undefined || human.weight == undefined ) {
+    alert("Input not valid.")
+    return;
+  };
+
+  //once we have valid data, remove the form using the removeElement function
+  removeElement("dino-compare")
+
 
   //now we add extra sauce to the infographic with the following compare methods
   //the compare methods formulates comparisons between dino data and human input data
