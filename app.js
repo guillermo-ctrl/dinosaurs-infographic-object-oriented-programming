@@ -148,7 +148,7 @@ let weightSystem = "lbs"
 
 //event listeners for the prefered metric systems
 
-metric.addEventListener('input', function () {
+metric.addEventListener("input", function () {
   metricSystem = event.target.value ;
   const cmoptions = document.getElementById("cmoptions")
   const inchesoptions = document.getElementById("inchesoptions")
@@ -161,7 +161,7 @@ metric.addEventListener('input', function () {
     inchesoptions.style.display = "none";
   }
 });
-mass.addEventListener('input', function () {
+mass.addEventListener("input", function () {
   weightSystem = event.target.value ;
   const lbsoptions = document.getElementById("weightlbs")
   const kgoptions = document.getElementById("weightkg")
@@ -177,40 +177,40 @@ mass.addEventListener('input', function () {
 
 // event listeners to get human data from user input
 
-thename.addEventListener('input', function () {
+thename.addEventListener("input", function () {
   human.name = event.target.value ;
 });
-diet.addEventListener('input', function () {
+diet.addEventListener("input", function () {
   human.diet = event.target.value ;
 });
-feet.addEventListener('input', function () {
+feet.addEventListener("input", function () {
   human.inputFeet = event.target.value ;
   human.inputFeet = parseInt(human.inputFeet, 10)
 });
-inches.addEventListener('input', function () {
+inches.addEventListener("input", function () {
   human.inputInches = event.target.value ;
   human.inputInches = parseInt(human.inputInches, 10)
 });
-meters.addEventListener('input', function () {
+meters.addEventListener("input", function () {
   human.inputMeters = event.target.value ;
   human.inputMeters = parseInt(human.inputMeters, 10)
 });
-centimeters.addEventListener('input', function () {
+centimeters.addEventListener("input", function () {
   human.inputCentimeters = event.target.value ;
   human.inputCentimeters = parseInt(human.inputCentimeters, 10)
 });
-weightlbs.addEventListener('input', function () {
+weightlbs.addEventListener("input", function () {
   human.inputlbs = event.target.value ;
   human.inputlbs = parseInt(human.inputlbs, 10)
 });
-weightkg.addEventListener('input', function () {
+weightkg.addEventListener("input", function () {
   human.inputkg = event.target.value ;
   human.inputkg = parseInt(human.inputkg, 10)
 });
 
 //This function can be used to remove elements by ID
 
-const removeelement = function (elementID) {
+const removeElement = function (elementID) {
   const element = document.getElementById(elementID);
   element.remove()}
 
@@ -224,14 +224,14 @@ const shuffleArray = function(array) {
 };
 
 //event listener for the restart button
-reload.addEventListener('click', function () {
+reload.addEventListener("click", function () {
   location.reload();
 });
 
 
 //the following function creates the infographic when "submit" is clicked
 //most of the functionality of the site is located within this event listener
-btn.addEventListener('click', function () {
+btn.addEventListener("click", function () {
 
   //First we want to check if the name input is valid.
 
@@ -254,8 +254,8 @@ btn.addEventListener('click', function () {
     return;
   };
 
-  //once we have valid data, remove the form using the removeelement function
-  removeelement("dino-compare")
+  //once we have valid data, remove the form using the removeElement function
+  removeElement("dino-compare")
 
   //assign human and dino values according to the chosen metric systems
   if (weightSystem == "kg") {
@@ -394,38 +394,38 @@ btn.addEventListener('click', function () {
   //the dinosaur images appear in random positions, human and pigeon are fixed
 
   (addImages = function () {
-    const triceratopsImg = document.createElement('img');
+    const triceratopsImg = document.createElement("img");
     triceratopsImg.setAttribute("src", "images/triceratops.png")
     dinoImages.push(triceratopsImg)
 
-    const elasmosaurusImg = document.createElement('img');
+    const elasmosaurusImg = document.createElement("img");
     elasmosaurusImg.setAttribute("src", "images/elasmosaurus.png")
     dinoImages.push(elasmosaurusImg);
 
-    const anklyosaurusImg = document.createElement('img');
+    const anklyosaurusImg = document.createElement("img");
     anklyosaurusImg.setAttribute("src", "images/anklyosaurus.png")
     dinoImages.push(anklyosaurusImg);
 
-    const brachiosaurusImg = document.createElement('img');
+    const brachiosaurusImg = document.createElement("img");
     brachiosaurusImg.setAttribute("src", "images/brachiosaurus.png")
     dinoImages.push(brachiosaurusImg);
 
-    const pteranodonImg = document.createElement('img');
+    const pteranodonImg = document.createElement("img");
     pteranodonImg.setAttribute("src", "images/pteranodon.png")
     dinoImages.push(pteranodonImg);
 
-    const stegosaurusImg = document.createElement('img');
+    const stegosaurusImg = document.createElement("img");
     stegosaurusImg.setAttribute("src", "images/stegosaurus.png")
     dinoImages.push(stegosaurusImg);
 
-    const tyrannosaurusRexImg = document.createElement('img');
+    const tyrannosaurusRexImg = document.createElement("img");
     tyrannosaurusRexImg.setAttribute("src", "images/tyrannosaurus%20rex.png")
     dinoImages.push(tyrannosaurusRexImg);
     //creating a variable for human and pigeon
-    const humanImage = document.createElement('img');
+    const humanImage = document.createElement("img");
     humanImage.setAttribute("src", "images/human.png")
 
-    const pigeonImage = document.createElement('img');
+    const pigeonImage = document.createElement("img");
     pigeonImage.setAttribute("src", "images/pigeon.png")
 
     //then we call the function to shuffle the array
@@ -439,19 +439,19 @@ btn.addEventListener('click', function () {
   //The following function creates text elements containing species and random fact
 
   const infoModuleCreator = function(name){
-    const lineBreak = document.createElement('br')
-    const newPara = document.createElement('p');
-    const newName = document.createTextNode('Species: ' + name.name);
+    const lineBreak = document.createElement("br")
+    const newPara = document.createElement("p");
+    const newName = document.createTextNode("Species: " + name.name);
 
     //make an exception so that the human only gets a name and no fact
     if (name.species === "human") {
-      const inputName = document.createTextNode('Name: ' + name.name);
+      const inputName = document.createTextNode("Name: " + name.name);
       newPara.appendChild(inputName);
       return newPara
     }
     //make an exception so that the pigeon only gets name and specific fact
     else if (name.extinct == false) {
-      const inputName = document.createTextNode('Species: ' + name.name);
+      const inputName = document.createTextNode("Species: " + name.name);
       const pigeonFact = document.createTextNode(pigeon.fact);
       newPara.appendChild(inputName);
       newPara.appendChild(lineBreak);
@@ -482,8 +482,8 @@ btn.addEventListener('click', function () {
   //now we loop through created list of images to create grid items (cards with images)
 
   dinoImages.forEach(function(item, index) { //loop through the list of images
-    const newDiv = document.createElement('div'); // creates a new div element and assigns a variable to it
-    newDiv.classList.add('grid-item'); // gives the new div element the "grid item" variable, thus making the div a "card" or grid item
+    const newDiv = document.createElement("div"); // creates a new div element and assigns a variable to it
+    newDiv.classList.add("grid-item"); // gives the new div element the "grid item" variable, thus making the div a "card" or grid item
     newDiv.setAttribute("id", item.src) //gives each new div element a different id based on the image src
     grid.appendChild(newDiv); //appends the new div to the parent container (the grid)
     card[index].appendChild(dinoImages[index]); //append an image to each new div
