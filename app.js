@@ -130,6 +130,7 @@ const human = {
   species: "human",
   diet: "herbivore",
   opposableThumbs: 2,
+  name: ""
 };
 
 //Set a default metric system
@@ -236,7 +237,7 @@ btn.addEventListener("click", function () {
     }
   }
   return true;
-};
+  };
   //assign human and dino values according to the chosen metric systems
   if (weightSystem == "kg") {
     human.weight = human.inputkg
@@ -374,58 +375,41 @@ btn.addEventListener("click", function () {
   //store the grid and the grid items into a variable for later refference
 
   const card = document.getElementsByClassName("grid-item")
-
   const infographic = document.getElementById("grid");
 
   //Empty array that will be filled with all images
 
   const dinoImages = [];
 
-  //Using an IIFE to add each dinosaur image + human image to the dinoImages array.
-  //the dinosaur images appear in random positions, human and pigeon are fixed
+  //then we fill the images array, looping through the dino array
 
-  (addImages = function () {
-    const triceratopsImg = document.createElement("img");
-    triceratopsImg.setAttribute("src", "images/triceratops.png")
-    dinoImages.push(triceratopsImg)
+  dinoArray.forEach(function(item, index) {
+    let newImg = document.createElement("img");
+    newImg.setAttribute("src", `images/${item.name}.png`)
+    dinoImages.push(newImg);
+  });
 
-    const elasmosaurusImg = document.createElement("img");
-    elasmosaurusImg.setAttribute("src", "images/elasmosaurus.png")
-    dinoImages.push(elasmosaurusImg);
+  //We delete the pigeon image since it will be added later 
 
-    const anklyosaurusImg = document.createElement("img");
-    anklyosaurusImg.setAttribute("src", "images/anklyosaurus.png")
-    dinoImages.push(anklyosaurusImg);
+  dinoImages.pop(dinoImages[dinoImages.length-1])
 
-    const brachiosaurusImg = document.createElement("img");
-    brachiosaurusImg.setAttribute("src", "images/brachiosaurus.png")
-    dinoImages.push(brachiosaurusImg);
+  //then we call the function to shuffle the array
 
-    const pteranodonImg = document.createElement("img");
-    pteranodonImg.setAttribute("src", "images/pteranodon.png")
-    dinoImages.push(pteranodonImg);
+  shuffleArray(dinoImages);
 
-    const stegosaurusImg = document.createElement("img");
-    stegosaurusImg.setAttribute("src", "images/stegosaurus.png")
-    dinoImages.push(stegosaurusImg);
+  //create variables for human and pigeon images
 
-    const tyrannosaurusRexImg = document.createElement("img");
-    tyrannosaurusRexImg.setAttribute("src", "images/tyrannosaurus%20rex.png")
-    dinoImages.push(tyrannosaurusRexImg);
-    //creating a variable for human and pigeon
-    const humanImage = document.createElement("img");
-    humanImage.setAttribute("src", "images/human.png")
+  let humanImage = document.createElement("img");
+  humanImage.setAttribute("src", "images/human.png")
 
-    const pigeonImage = document.createElement("img");
-    pigeonImage.setAttribute("src", "images/pigeon.png")
+  let pigeonImage = document.createElement("img");
+  pigeonImage.setAttribute("src", "images/pigeon.png")
 
-    //then we call the function to shuffle the array
-    shuffleArray(dinoImages);
-    //then add the human and pigeon to specific locations so that they always appear in the middle
-    dinoImages.splice(4, 0, humanImage);
-    dinoImages.splice(5, 0, pigeonImage);
-  })()
-
+  //and add them to specific places of the images array
+  
+  dinoImages.splice(4, 0, humanImage);
+  dinoImages.splice(5, 0, pigeonImage);
+    
 
   //The following function creates text elements containing species and random fact
 
@@ -478,25 +462,25 @@ btn.addEventListener("click", function () {
     newDiv.setAttribute("id", item.src) //gives each new div element a different id based on the image src
     grid.appendChild(newDiv); //appends the new div to the parent container (the grid)
     card[index].appendChild(dinoImages[index]); //append an image to each new div
-    if (newDiv.id.slice(-15) == "triceratops.png") {
+    if (newDiv.id.slice(-15) == "Triceratops.png") {
       card[index].appendChild(infoModuleCreator(triceratops));
     }
-    else if (newDiv.id.slice(-23) == "tyrannosaurus%20rex.png") {
+    else if (newDiv.id.slice(-23) == "Tyrannosaurus%20Rex.png") {
       card[index].appendChild(infoModuleCreator(tyrannosaurusRex));
     }
-    else if (newDiv.id.slice(-16) == "anklyosaurus.png") {
+    else if (newDiv.id.slice(-16) == "Anklyosaurus.png") {
       card[index].appendChild(infoModuleCreator(anklyosaurus));
     }
-    else if (newDiv.id.slice(-17) == "brachiosaurus.png") {
+    else if (newDiv.id.slice(-17) == "Brachiosaurus.png") {
       card[index].appendChild(infoModuleCreator(brachiosaurus));
     }
-    else if (newDiv.id.slice(-15) == "stegosaurus.png") {
+    else if (newDiv.id.slice(-15) == "Stegosaurus.png") {
       card[index].appendChild(infoModuleCreator(stegosaurus));
     }
-    else if (newDiv.id.slice(-16) == "elasmosaurus.png") {
+    else if (newDiv.id.slice(-16) == "Elasmosaurus.png") {
       card[index].appendChild(infoModuleCreator(elasmosaurus));
     }
-    else if (newDiv.id.slice(-14) == "pteranodon.png") {
+    else if (newDiv.id.slice(-14) == "Pteranodon.png") {
       card[index].appendChild(infoModuleCreator(pteranodon));
     }
     else if (newDiv.id.slice(-10) == "pigeon.png") {
