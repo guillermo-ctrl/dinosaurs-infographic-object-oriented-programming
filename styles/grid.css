@@ -1,0 +1,86 @@
+#grid {
+  background: #fff url(images/tracks.png) no-repeat;
+  background-size: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 2em;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.grid-item {
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+}
+
+.grid-item:nth-child(1) {
+  background: #009687f5;
+}
+
+.grid-item:nth-child(2) {
+  background: #dc7657f5;
+}
+
+.grid-item:nth-child(3) {
+  background: #4bb3c1fa;
+}
+
+.grid-item:nth-child(4) {
+  background: #fac069f9;
+}
+
+.grid-item:nth-child(5) {
+  background: #67a866f9;
+}
+
+.grid-item:nth-child(6) {
+  background: #b94169fa;
+}
+
+.grid-item:nth-child(7) {
+  background: #7f62b3fa;
+}
+
+.grid-item:nth-child(8) {
+  background: #9fc376f9;
+}
+
+.grid-item:nth-child(9) {
+  background: #677bcbfa;
+}
+
+@media (min-width: 550px) {
+  #grid div {
+    width: calc(100% / 3);
+  }
+}
+
+.grid-item h3 {
+  font-size: 2em;
+  color: #eee;
+}
+
+.grid-item img {
+  max-width: 100%;
+  padding-bottom: 1em;
+}
+
+.grid-item p {
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0.8em 0.8em 1.8em;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #fff;
+}
+/*# sourceMappingURL=grid.css.map */

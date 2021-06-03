@@ -1,0 +1,39 @@
+body {
+  background: #6fd0e0;
+  background: -webkit-gradient(linear, left bottom, left top, from(#6fd0e0), to(#abe4a7));
+  background: linear-gradient(0deg, #6fd0e0 0%, #abe4a7 100%);
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  min-height: 100vh;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Frijole', cursive;
+  font-size: 3em;
+  font-weight: 400;
+}
+
+h2,
+h3 {
+  font-family: 'Oswald', sans-serif;
+}
+
+@media (min-width: 650px) {
+  h1 {
+    font-size: 5em;
+  }
+}
+
+@media (min-width: 650px) and (min-width: 920px) {
+  h1 {
+    font-size: 8em;
+  }
+}
+
+@media (min-width: 650px) {
+  p {
+    font-weight: 100;
+  }
+}
+/*# sourceMappingURL=general.css.map */
