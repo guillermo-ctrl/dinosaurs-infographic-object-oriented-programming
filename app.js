@@ -135,6 +135,13 @@ const human = {
 let metricSystem = "inches"
 let weightSystem = "lbs"
 
+$(document).ready(function(){
+    console.log("jquery working")
+    $("p").click(function(){
+        $(this).hide
+        console.log("jquery working")
+    })
+})
 // Listen for metric system changes
 mass.addEventListener("change", function() {
 
