@@ -135,16 +135,9 @@ const human = {
 let metricSystem = "inches"
 let weightSystem = "lbs"
 
-$(document).ready(function(){
-    console.log("jquery working")
-    $("p").click(function(){
-        $(this).hide
-        console.log("jquery working")
-    })
-})
-// Listen for metric system changes
-mass.addEventListener("change", function() {
 
+// Listen for metric system changes
+$(mass).change(function() {
     if (this.value === "kg") {
         kgoptions.style.display = "inline-block"
         lbsoptions.style.display = "none"
@@ -153,11 +146,9 @@ mass.addEventListener("change", function() {
         kgoptions.style.display = "none"
         lbsoptions.style.display = "inline-block"
     }
-    
-})
+  });
 
-metric.addEventListener("change", function() {
-
+  $(metric).change(function() {
     if (this.value === "inches") {
         inchesoptions.style.display = "inline-block"
         cmoptions.style.display = "none"
@@ -166,15 +157,7 @@ metric.addEventListener("change", function() {
         inchesoptions.style.display = "none"
         cmoptions.style.display = "inline-block"
     }
-    
-})
-
-//This function can be used to remove elements by ID
-
-const removeElement = function(elementID) {
-    const element = document.getElementById(elementID);
-    element.remove()
-}
+  });
 
 //this function can be used to shuffle an array (credit: stackoverflow)
 
@@ -186,30 +169,30 @@ for (let i = array.length - 1; i > 0; i--) {
 };
 
 //event listener for the restart button
-reload.addEventListener("click", function() {
-location.reload();
+$(reload).click(function(){
+    location.reload();
 });
+
 
 //the following function creates the infographic when "submit" is clicked
 //most of the functionality of the site is located within this event listener
 
-btn.addEventListener("click", function() {
-
-
+$(btn).click(function(){
+    
 //get the human data
-human.name = document.getElementById("thename").value;
-human.diet = document.getElementById("diet").value;
-human.inputFeet = document.getElementById("feet").value;
+human.name = $("#thename").val();
+human.diet = $("#diet").val();
+human.inputFeet = $("#feet").val();
 human.inputFeet = parseInt(human.inputFeet, 10)
-human.inputInches = document.getElementById("inches").value;
+human.inputInches = $("#inches").val();
 human.inputInches = parseInt(human.inputInches, 10)
-human.inputMeters = document.getElementById("meters").value;
+human.inputMeters = $("#meters").val();
 human.inputMeters = parseInt(human.inputMeters, 10)
-human.inputCentimeters = document.getElementById("centimeters").value;
+human.inputCentimeters = $("#centimeters").val();
 human.inputCentimeters = parseInt(human.inputCentimeters, 10)
-human.inputlbs = document.getElementById("weightlbs").value;
+human.inputlbs = $("#weightlbs").val();
 human.inputlbs = parseInt(human.inputlbs, 10)
-human.inputkg = document.getElementById("weightkg").value;
+human.inputkg = $("#weightkg").val();
 human.inputkg = parseInt(human.inputkg, 10)
 
 //First we want to check if the name input is valid.
@@ -227,8 +210,8 @@ function onlyCharacters(str) {
 };
 //Check metric system
 
-weightSystem = document.getElementById("mass").value;
-metricSystem = document.getElementById("metric").value;
+weightSystem = $("#mass").val();
+metricSystem = $("#metric").val();
 
 //assign human and dino values according to the chosen metric systems
 
@@ -254,6 +237,7 @@ if (metricSystem == "cm") {
     human.heightinches = (human.inputFeet * 12) + (human.inputInches);
     human.height = human.heightinches
 }
+
 //here we have an if statement that will get out of the function and alert
 //the user if the input is not valid
 
@@ -263,9 +247,9 @@ if (onlyCharacters(human.name) == false || human.name == undefined || human.name
 };
 
 
-//once we have valid data, remove the form using the removeElement function
+//once we have valid data, remove the form 
+$("#dino-compare").remove();
 
-removeElement("dino-compare")
 
 //now we add extra sauce to the infographic with the following compare methods
 //the compare methods formulates comparisons between dino data and human input data
@@ -364,7 +348,7 @@ dinoArray.forEach(function(item, index) {
 
 //store the grid and the grid items into a variable for later refference
 
-const card = document.getElementsByClassName("grid-item")
+const card = document.getElementsByClassName("grid-item");
 const infographic = document.getElementById("grid");
 
 //Empty array that will be filled with all images
@@ -467,5 +451,5 @@ dinoArray.forEach(function(item, index) { //loop through the list of images
 //and finally show the button to restart the page
 
 reload.style.display = "inline-block"
-
 });
+
