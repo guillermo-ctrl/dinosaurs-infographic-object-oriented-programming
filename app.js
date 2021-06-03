@@ -103,10 +103,10 @@ this.opposableThumbs = 0;
 //Function that combines the constructor function for dinosaurs with the dinoData
 
 function createDino(n) {
-return new dino(dinoData[n].name, dinoData[n].weight, dinoData[n].height, dinoData[n].diet, dinoData[n].where, dinoData[n].when, dinoData[n].fact, dinoData[n].extinct)
+    return new dino(dinoData[n].name, dinoData[n].weight, dinoData[n].height, dinoData[n].diet, dinoData[n].where, dinoData[n].when, dinoData[n].fact, dinoData[n].extinct)
 }
 
-//each dino Object is created using the above function
+//dino Objects created using the above function
 
 const triceratops = createDino(0)
 const tyrannosaurusRex = createDino(1)
@@ -124,10 +124,10 @@ const dinoArray = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, s
 // Create Human Object using literal notation (since there is only one)
 
 const human = {
-species: "human",
-diet: "herbivore",
-opposableThumbs: 2,
-name: ""
+    species: "human",
+    diet: "herbivore",
+    opposableThumbs: 2,
+    name: ""
 };
 
 //Set a default metric system
@@ -165,8 +165,8 @@ metric.addEventListener("change", function() {
 //This function can be used to remove elements by ID
 
 const removeElement = function(elementID) {
-const element = document.getElementById(elementID);
-element.remove()
+    const element = document.getElementById(elementID);
+    element.remove()
 }
 
 //this function can be used to shuffle an array (credit: stackoverflow)
